@@ -1,0 +1,41 @@
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    box-shadow: 0 0 3px rgba(0,0,0,0.3);
+}
+.right_footer {
+    margin-top: 6px;
+    color: white;
+    float: left;
+    float: right;
+}
+
+.left_footer {
+    width: 10%; 
+    float: left;
+    margin-top: 1%;
+}
+.footer_text{
+    text-align: center;
+}
+.footer_href{
+    color: white;
+    text-align: center;
+}
+.center_footer{
+    width: 80%; 
+    float: left; 
+}
+#ru_form{
+    height: 30%;
+    margin-right: 5px;
+}
+#en_form{
+    height: 30%;
+    margin-right: 5px;
+}
