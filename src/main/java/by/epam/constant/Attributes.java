@@ -34,8 +34,9 @@ public final class Attributes {
     public static final String USER_NAME_SUCCESS = "usernamesuccess";
     public static final String USER_NAME_ERROR = "usernameerror";
     public static final String USER_UNBAN_ERROR = "userunbanerror";
-    public static final String MAIN_SUCCESS = "mainsuccess";
-    public static final String MAIN_ERROR = "mainerror";
+    public static final String MAIN_SUBSCRIBE_SUCCESS = "mainsubscribesuccess";
+    public static final String MAIN_SUBSCRIBE_ERROR = "mainsubscribeerror";
+    public static final String MAIN_ADMIN_ERROR = "mainadminerror";
     public static final String SYSTEM_BALANCE = "systembalance";
     public static final String USER_OBJ = "userobj";
     public static final String PAGES = "pagesList";

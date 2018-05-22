@@ -3,11 +3,12 @@ package by.epam.command.admin;
 import by.epam.command.AbstractCommand;
 import by.epam.configuration.ConfigurationPage;
 import by.epam.constant.Attributes;
+import by.epam.constant.Constants;
 import by.epam.constant.Pages;
 import by.epam.constant.Parameters;
 import by.epam.entity.Publication;
 import by.epam.exception.ServiceException;
-import by.epam.service.AdminService;
+import by.epam.pool.AdminService;
 import by.epam.service.PublicationService;
 import by.epam.view.View;
 import java.io.File;
@@ -38,7 +39,7 @@ public class DeletePublicationCommand extends AbstractCommand {
     }
 
     private void deleteImage(String publicationImage) {
-        File file = new File("D:/epam/HelloWorldd/src/main/webapp/images/" + publicationImage);
+        File file = new File(Constants.IMAGES_PATH + publicationImage);
         file.delete();
     }
 

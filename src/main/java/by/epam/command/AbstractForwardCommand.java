@@ -8,7 +8,7 @@ import by.epam.entity.Payment;
 import by.epam.entity.Publication;
 import by.epam.entity.User;
 import by.epam.exception.ServiceException;
-import by.epam.service.AdminService;
+import by.epam.pool.AdminService;
 import by.epam.service.PaymentService;
 import by.epam.service.PublicationService;
 import by.epam.service.UserService;

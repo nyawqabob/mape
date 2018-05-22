@@ -52,6 +52,12 @@
     <c:if test="${not empty userunsubscribeerror}">
         <fmt:message bundle="${locale}" key="text.user.local.userunsubscribeerror" var="usererror"/>
     </c:if>
+    <c:if test="${not empty usernamesuccess}">
+        <fmt:message bundle="${locale}" key="text.user.local.usernamesuccess" var="usersuccess"/>
+    </c:if>
+    <c:if test="${not empty usernameerror}">
+        <fmt:message bundle="${locale}" key="text.user.local.usernameerror" var="usererror"/>
+    </c:if>
     <head>
         <link href="<c:url value='/css/default.css' />" rel="stylesheet" type="text/css"/>
         <script src="<c:url value='/js/admin.js' />" type="text/javascript"></script>
@@ -84,6 +90,8 @@
                         <c:remove var="userpassworderror" scope="session" />
                         <c:remove var="userunsubscribesuccess" scope="session" />
                         <c:remove var="userunsubscribeerror" scope="session" />
+                        <c:remove var="usernamesuccess" scope="session" />
+                        <c:remove var="usernameerror" scope="session" />
                     </div></div>
                 </c:if>
                 <c:if test="${not empty usererror}">
@@ -97,6 +105,8 @@
                         <c:remove var="userpassworderror" scope="session" />
                         <c:remove var="userunsubscribesuccess" scope="session" />
                         <c:remove var="userunsubscribeerror" scope="session" />
+                        <c:remove var="usernamesuccess" scope="session" />
+                        <c:remove var="usernameerror" scope="session" />
                     </div></div>
                 </c:if>
             <div class="pagination-user">
@@ -273,6 +283,6 @@
             </script>
 
         </div>
-<t:footer></t:footer>
+        <t:footer></t:footer>
     </body>
 </html>

@@ -8,7 +8,7 @@ import by.epam.constant.Pages;
 import by.epam.constant.Parameters;
 import by.epam.entity.User;
 import by.epam.exception.ServiceException;
-import by.epam.service.AdminService;
+import by.epam.pool.AdminService;
 import by.epam.service.UserService;
 import by.epam.view.View;
 import java.util.List;

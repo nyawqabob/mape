@@ -1,4 +1,4 @@
-package by.epam.service;
+package by.epam.pool;
 
 import by.epam.dao.admin.impl.AdminDAOImpl;
 import by.epam.dao.DAOFactory;

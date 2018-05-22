@@ -31,6 +31,15 @@
     <fmt:message bundle="${locale}" key="text.home.local.subperiods" var="subperiods"/>
     <fmt:message bundle="${locale}" key="text.admin.local.magazine" var="magazine"/>
     <fmt:message bundle="${locale}" key="text.admin.local.paper" var="paper"/>
+    <c:if test="${not empty mainsubscribesuccess}">
+    <fmt:message bundle="${locale}" key="text.home.local.mainsubscribesuccess" var="mainsuccess"/>
+    </c:if>
+    <c:if test="${not empty mainsubscribeerror}">
+    <fmt:message bundle="${locale}" key="text.home.local.mainsubscribeerror" var="mainerror"/>
+    </c:if>
+     <c:if test="${not empty mainadminerror}">
+    <fmt:message bundle="${locale}" key="text.home.local.mainadminerror" var="mainerror"/>
+    </c:if>
 
     <head>
         <link href="<c:url value='/css/default.css' />" rel="stylesheet" type="text/css"/>
@@ -47,6 +56,10 @@
                     <b>${mainsuccess}</b><br/><br/>
                     <button class="submit" onclick="<c:out value="hide(${success})"/>">Ok</button>
                     <c:remove var="mainsuccess" scope="session" />
+                    <c:remove var="mainerror" scope="session" />
+                    <c:remove var="mainsubscribesuccess" scope="session" />
+                    <c:remove var="mainsubscribeerror" scope="session" />
+                    <c:remove var="mainadminerror" scope="session" />
                 </div></div>
             </c:if>
             <c:if test="${not empty mainerror}">
@@ -55,6 +68,10 @@
                     <b>${mainerror}</b><br/><br/>
                     <button class="submit-error" onclick="<c:out value="hide(${error})"/>">Ok</button>
                     <c:remove var="mainerror" scope="session" />
+                    <c:remove var="mainsuccess" scope="session" />
+                    <c:remove var="mainsubscribesuccess" scope="session" />
+                    <c:remove var="mainsubscribeerror" scope="session" />
+                    <c:remove var="mainadminerror" scope="session" />
                 </div></div>
             </c:if>
     </div>

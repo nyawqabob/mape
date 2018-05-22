@@ -75,7 +75,7 @@ public class UserDAOImpl extends AbstractEntityDAO<User> implements UserDAO {
 
     public void setUserBalance(int userId, double newBalance) throws DAOException {
         try {
-            int rows = executeUpdate(SQL_UPDATE_USER_BALANCE, userId, newBalance);
+            int rows = executeUpdate(SQL_UPDATE_USER_BALANCE, newBalance, userId);
             if (rows != 1) {
                 throw new DAOException("User " + userId + " doesn't exist");
             }

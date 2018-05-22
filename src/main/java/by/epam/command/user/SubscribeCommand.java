@@ -27,7 +27,7 @@ public class SubscribeCommand extends AbstractCommand {
         try {
             subscribtionPeriod = Integer.parseInt(request.getParameter(Parameters.SUBSCRIBTION_PERIODS));
         } catch (NumberFormatException ex) {
-            session.setAttribute(Attributes.MAIN_ERROR, "Wrong subscribtion periods");
+            session.setAttribute(Attributes.MAIN_SUBSCRIBE_ERROR, "Wrong subscribtion periods");
             view.setPagePath(Pages.MAIN_PATH);
             return view;
         }
@@ -41,14 +41,14 @@ public class SubscribeCommand extends AbstractCommand {
                 String username = user.getName();
                 user = userService.takeUserByName(username);
                 session.setAttribute(Attributes.USER_OBJ, user);
-                session.setAttribute(Attributes.MAIN_SUCCESS, "Subscribe was successed");
+                session.setAttribute(Attributes.MAIN_SUBSCRIBE_SUCCESS, "Subscribe was successed");
                 view.setPagePath(Pages.MAIN_PATH);
             } else {
-                session.setAttribute(Attributes.MAIN_ERROR, "Subscribe wasn't confirmed, you are admin");
+                session.setAttribute(Attributes.MAIN_ADMIN_ERROR, "Subscribe wasn't confirmed, you are admin");
                 view.setPagePath(Pages.MAIN_PATH);
             }
         } catch (ServiceException ex) {
-            session.setAttribute(Attributes.MAIN_ERROR, ex.getMessage());
+            session.setAttribute(Attributes.MAIN_SUBSCRIBE_ERROR, ex.getMessage());
             view.setPagePath(Pages.MAIN_PATH);
         }
 

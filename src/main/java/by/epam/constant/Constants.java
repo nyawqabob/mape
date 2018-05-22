@@ -8,4 +8,5 @@ public final class Constants {
     public static final String NOT_BANNED_STATUS = "not_banned";
     public static final int STRING_LIMITER = 45;
     public static final int INTEGER_LIMITTER = 999999;
+    public static final String IMAGES_PATH = "D:/epam/HelloWorldd/src/main/webapp/images/";
 }

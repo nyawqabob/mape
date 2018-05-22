@@ -3,10 +3,11 @@ package by.epam.command.admin;
 import by.epam.command.AbstractCommand;
 import by.epam.validator.AddPublicationValidator;
 import by.epam.constant.Attributes;
+import by.epam.constant.Constants;
 import by.epam.constant.Pages;
 import by.epam.constant.Parameters;
 import by.epam.exception.ServiceException;
-import by.epam.service.AdminService;
+import by.epam.pool.AdminService;
 import by.epam.view.View;
 import java.io.File;
 import java.io.IOException;
@@ -53,7 +54,7 @@ public class AddPublicationCommand extends AbstractCommand {
             filePart = request.getPart(Parameters.PUBLICATION_IMAGE);
             InputStream fileContent = filePart.getInputStream();
             publicationImage = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-            File file = new File("D:/epam/HelloWorldd/src/main/webapp/images/" + publicationImage);
+            File file = new File(Constants.IMAGES_PATH + publicationImage);
             FileUtils.copyInputStreamToFile(fileContent, file);
         } catch (IOException | ServletException ex) {
             throw new ServiceException("Can't upload, try again later", ex);
