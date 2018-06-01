@@ -1,11 +1,8 @@
 package by.epam.dao.user.impl;
 
 import by.epam.dao.AbstractEntityDAO;
-import by.epam.dao.AbstractDAO;
 import by.epam.dao.user.UserDAO;
 import by.epam.constant.Parameters;
-import by.epam.entity.Payment;
-import by.epam.entity.Publication;
 import by.epam.entity.User;
 import by.epam.exception.DAOException;
 import java.sql.Connection;
@@ -31,11 +28,13 @@ public class UserDAOImpl extends AbstractEntityDAO<User> implements UserDAO {
     private static final String SQL_UPDATE_USERNAME = "UPDATE users SET login=? WHERE login=?";
     private static final String SQL_UPDATE_PASSWORD = "UPDATE users SET password=? WHERE login=?";
     private static final String SQL_SELECT_USEROBJ_BY_ID = "SELECT * FROM users WHERE login=?";
+    private static final String SQL_SELECT_USER_BY_EMAIL = "SELECT * FROM users WHERE email=?";
 
     public UserDAOImpl(Connection connection) {
         this.connection = connection;
     }
 
+    @Override
     public User takeUserByName(String username) throws DAOException {
         User user = new User();
         PreparedStatement statement = null;
@@ -50,6 +49,25 @@ public class UserDAOImpl extends AbstractEntityDAO<User> implements UserDAO {
         return user;
     }
 
+    @Override
+    public User takeUserByEmail(String email) throws DAOException {
+        User user = new User();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_SELECT_USER_BY_EMAIL);
+            statement.setObject(1, email);
+            ResultSet rs = statement.executeQuery();
+            user = parseResultSetToEntity(rs);
+        } catch (SQLException e) {
+            LOGGER.error("DAO take user by name operation failed", e);
+            throw new DAOException("DAO take user by name operation failed", e);
+        } finally {
+            close(statement);
+        }
+        return user;
+    }
+
+    @Override
     public void addPublicationToUser(int userId, int publicationId, int publicationPeriod) throws DAOException {
         try {
             executeUpdate(SQL_INSERT_PUBLICATION_TO_USER, userId, publicationId, publicationPeriod);
@@ -60,7 +78,21 @@ public class UserDAOImpl extends AbstractEntityDAO<User> implements UserDAO {
 
     }
 
-    public boolean matchPublication(int userId, int publicationId) throws DAOException {
+    @Override
+    public boolean isUserExist(String email) throws DAOException {
+        try {
+            ResultSet resultSet = executeQuery(SQL_SELECT_USER_BY_EMAIL, email);
+            boolean isRight = resultSet.next();
+            return isRight;
+        } catch (SQLException e) {
+            LOGGER.error("DAO add publication to user operation failed", e);
+            throw new DAOException("DAO add publication to user operation failed", e);
+        }
+
+    }
+
+    @Override
+    public boolean isMatchPublicationAtUser(int userId, int publicationId) throws DAOException {
         try {
             ResultSet resultSet = executeQuery(SQL_SELECT_PUBLICATION_BY_USER, userId, publicationId);
             boolean isMatched = resultSet.next();
@@ -73,7 +105,8 @@ public class UserDAOImpl extends AbstractEntityDAO<User> implements UserDAO {
         }
     }
 
-    public void setUserBalance(int userId, double newBalance) throws DAOException {
+    @Override
+    public void changeUserBalance(int userId, double newBalance) throws DAOException {
         try {
             int rows = executeUpdate(SQL_UPDATE_USER_BALANCE, newBalance, userId);
             if (rows != 1) {
@@ -85,6 +118,7 @@ public class UserDAOImpl extends AbstractEntityDAO<User> implements UserDAO {
         }
     }
 
+    @Override
     public void addPayment(int userId, double amount, String publicationName, String date, int subscribtionPeriod, String finishDate) throws DAOException {
         try {
             executeUpdate(SQL_ADD_PAYMENT, amount, date, publicationName, subscribtionPeriod, userId, finishDate);
@@ -109,7 +143,8 @@ public class UserDAOImpl extends AbstractEntityDAO<User> implements UserDAO {
 
     }
 
-    public void setName(String currentName, String newName) throws DAOException {
+    @Override
+    public void changeName(String currentName, String newName) throws DAOException {
         try {
             int rows = executeUpdate(SQL_UPDATE_USERNAME, newName, currentName);
             if (rows != 1) {
@@ -121,7 +156,8 @@ public class UserDAOImpl extends AbstractEntityDAO<User> implements UserDAO {
         }
     }
 
-    public void setPassword(String username, String newPassword) throws DAOException {
+    @Override
+    public void changePassword(String username, String newPassword) throws DAOException {
         try {
             int rows = executeUpdate(SQL_UPDATE_PASSWORD, newPassword, username);
             if (rows != 1) {
@@ -133,6 +169,7 @@ public class UserDAOImpl extends AbstractEntityDAO<User> implements UserDAO {
         }
     }
 
+    @Override
     public List<User> takeAllUsers() throws DAOException {
         List<User> users = new ArrayList<>();
         PreparedStatement statement = null;
@@ -158,7 +195,8 @@ public class UserDAOImpl extends AbstractEntityDAO<User> implements UserDAO {
                 double balance = resultSet.getDouble(Parameters.BALANCE);
                 String role = resultSet.getString(Parameters.ROLE);
                 String status = resultSet.getString(Parameters.STATUS);
-                User user = new User(id, name, pass, balance, role, status);
+                String email = resultSet.getString(Parameters.EMAIL);
+                User user = new User(id, name, pass, balance, role, status, email);
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -178,6 +216,7 @@ public class UserDAOImpl extends AbstractEntityDAO<User> implements UserDAO {
                 user.setBalance(resultSet.getDouble(Parameters.BALANCE));
                 user.setRole(resultSet.getString(Parameters.ROLE));
                 user.setStatus(resultSet.getString(Parameters.STATUS));
+                user.setEmail(resultSet.getString(Parameters.EMAIL));
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
@@ -193,6 +232,10 @@ public class UserDAOImpl extends AbstractEntityDAO<User> implements UserDAO {
     @Override
     public String getSelectEntityQuery() {
         return SQL_SELECT_USEROBJ_BY_ID;
+    }
+
+    public String getSelectUserByEmail() {
+        return SQL_SELECT_USER_BY_EMAIL;
     }
 
 }

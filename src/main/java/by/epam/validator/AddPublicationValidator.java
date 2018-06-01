@@ -1,7 +1,6 @@
 package by.epam.validator;
 
 import by.epam.constant.Attributes;
-import by.epam.constant.Constants;
 import by.epam.constant.Parameters;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +13,8 @@ public class AddPublicationValidator extends AbstractValidator {
         String publicationPrice = request.getParameter(Parameters.PUBLICATION_PRICE);
         String publicationType = request.getParameter(Parameters.PUBLICATION_TYPE);
         List<String> messages = new ArrayList<>();
-        checkOnEmptyAndLength(publicationName, messages, Parameters.PUBLICATION_NAME);
-        checkOnEmptyAndLength(publicationPrice, messages, Parameters.PUBLICATION_PRICE);
-        checkOnEmptyAndLength(publicationType, messages, Parameters.PUBLICATION_TYPE);
+        checkOnRegExp(publicationName, messages, Parameters.PUBLICATION_NAME);
+        checkOnRegExp(publicationPrice, messages, Parameters.PUBLICATION_PRICE);
         if (!messages.isEmpty()) {
             setMessageAttribute(messages, request, Attributes.PUBLICATION_ADD_ERROR);
         }

@@ -5,7 +5,7 @@ import by.epam.constant.Attributes;
 import by.epam.constant.Pages;
 import by.epam.constant.Parameters;
 import by.epam.exception.ServiceException;
-import by.epam.pool.AdminService;
+import by.epam.service.admin.impl.AdminServiceImpl;
 import by.epam.validator.SetUserBalanceValidator;
 import by.epam.view.View;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +27,7 @@ public class SetUserBalanceCommand extends AbstractCommand {
             view.setPagePath(Pages.REDIRECT_USERS_PATH);
             return view;
         }
-        AdminService adminService = new AdminService();
+        AdminServiceImpl adminService = new AdminServiceImpl();
         SetUserBalanceValidator validator = new SetUserBalanceValidator();
         if (validator.isValid(request)) {
             try {

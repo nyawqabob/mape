@@ -33,6 +33,8 @@
     <fmt:message bundle="${locale}" key="text.home.local.week" var="week"/>
     <fmt:message bundle="${locale}" key="text.publication.local.addpubl" var="addnewpubl"/>
     <fmt:message bundle="${locale}" key="text.publication.local.onlynumber" var="onlynumber"/>
+    <fmt:message bundle="${locale}" key="text.publication.local.onlyletters" var="onlyletters"/>
+    <fmt:message bundle="${locale}" key="text.publication.local.loginandpasswordvalidator" var="forloginandpass"/>
     <fmt:message bundle="${locale}" key="text.publication.local.newpublname" var="newpublname"/>
     <fmt:message bundle="${locale}" key="text.publication.local.newpublimage" var="newpublimage"/>
     <fmt:message bundle="${locale}" key="text.publication.local.newpublprice" var="newpublprice"/>
@@ -160,7 +162,7 @@
                                 <form name="addPublicationForm" method="POST" action="<c:url value="/controller/add"/>" enctype="multipart/form-data">
                                     <input type="hidden" name="command" value="addpublication"/>
                                     ${newpublname}:<br/>
-                                    <input type="text" name="publicationname" value="" required="true" maxlength="45"/>
+                                    <input type="text" name="publicationname" value="" required="true" maxlength="45"  pattern="^(?=.{2,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" title="${forloginandpass}"/>
                                     <br/>${newpubltype}:<br/>
                                     <select name="publicationtype" required="true">
                                         <option value="book">${book}</option>
@@ -174,7 +176,7 @@
                                         <option value="weak">${week}</option>
                                     </select>
                                     <br/>${newpublprice}:<br/>
-                                    <input type="text" name="publicationprice" maxlength="45" placeholder="${onlynumber}" value="" required="true" pattern="^[ 0-9]+$"/>
+                                    <input type="text" name="publicationprice" maxlength="45" title="${onlynumber}" value="" required="true" pattern="^[ 0-9]+$"/>
                                     <br/>${newpublimage}:<br/>
                                     <input type="file" name="publicationimage" maxlength="45" value="select image" required="true" accept="image/x-png,image/gif,image/jpeg" />
                                     <input type="submit" value="Ok" class="submit"/>
@@ -197,7 +199,7 @@
                                 <br/>
                                 <form name="deletePublicationForm" method="GET" action="<c:url value="/controller/admin/publications"/>">
                                     ${findpublications}<br/>
-                                    <input type="text" name="findpublicationname" value="" required="true"/>
+                                    <input type="text" name="findpublicationname" value="" required="true" pattern="^(?=.{2,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" title="${forloginandpass}"/>
                                     <input type="submit" class="submit" value="${findd}"/>
                                 </form>
                             </div>
@@ -255,7 +257,7 @@
                                 <div class="modal-body">
                                     <form id="delete_form" method="POST" action="<c:url value="/controller/changepublicationprice"/>">
                                         <input type="hidden" name="publicationid" value="${publication.id}"/>
-                                        <input pattern="[0-9]" type="text" maxlength="45" name="newprice" value="" required="true"/>
+                                        <input type="text" maxlength="45" name="newprice" title="${onlynumber}" value="" required="true" pattern="^[ 0-9]+$"/>
                                         <input type="submit" value="Ok" class="submit"></form>
                                 </div>
                             </div>
@@ -273,7 +275,7 @@
                                 <div class="modal-body">
                                     <form id="delete_form" method="POST" action="<c:url value="/controller/changepublicationname"/>">
                                         <input type="hidden" name="publicationid" value="${publication.id}"/>
-                                        <input type="text" maxlength="45" name="newpublicationname" value="" required="true"/>
+                                        <input type="text" maxlength="45" name="newpublicationname" pattern="^(?=.{2,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" title="${forloginandpass}" required="true"/>
                                         <input type="submit" value="Ok" class="submit"></form>
                                 </div>
                             </div>

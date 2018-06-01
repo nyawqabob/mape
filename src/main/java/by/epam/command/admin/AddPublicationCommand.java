@@ -7,7 +7,7 @@ import by.epam.constant.Constants;
 import by.epam.constant.Pages;
 import by.epam.constant.Parameters;
 import by.epam.exception.ServiceException;
-import by.epam.pool.AdminService;
+import by.epam.service.admin.impl.AdminServiceImpl;
 import by.epam.view.View;
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class AddPublicationCommand extends AbstractCommand {
         view.setViewType(View.ViewType.REDIRECT);
         if (addPublicationValidator.isValid(request)) {
             try {
-                AdminService adminService = new AdminService();
+                AdminServiceImpl adminService = new AdminServiceImpl();
                 adminService.addPublication(publicationName, publicationType, publicationPrice, addFileAndTakeName(request), publicationPeriodType);
                 session.setAttribute(Attributes.PUBLICATION_ADD_SUCCESS, "Publication added");
                 view.setPagePath(Pages.REDIRECT_PUBLICATIONS_PATH);
@@ -48,18 +48,24 @@ public class AddPublicationCommand extends AbstractCommand {
     }
 
     private String addFileAndTakeName(HttpServletRequest request) throws ServiceException {
-        String publicationImage = null;
+        String publicationName = request.getParameter(Parameters.PUBLICATION_NAME);
+        String publicationType = request.getParameter(Parameters.PUBLICATION_TYPE);
+        double publicationPrice = Double.parseDouble(request.getParameter(Parameters.PUBLICATION_PRICE));
+        String newName = null;
         try {
             Part filePart;
             filePart = request.getPart(Parameters.PUBLICATION_IMAGE);
             InputStream fileContent = filePart.getInputStream();
-            publicationImage = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            String publicationImage = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
             File file = new File(Constants.IMAGES_PATH + publicationImage);
             FileUtils.copyInputStreamToFile(fileContent, file);
+            newName = publicationName + publicationType + publicationPrice + ".png";
+            File newFile = new File(Constants.IMAGES_PATH + newName);
+            boolean ok = file.renameTo(newFile);
         } catch (IOException | ServletException ex) {
             throw new ServiceException("Can't upload, try again later", ex);
         }
-        return publicationImage;
+        return newName;
     }
 
 }

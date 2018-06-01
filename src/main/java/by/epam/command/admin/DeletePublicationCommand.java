@@ -8,8 +8,8 @@ import by.epam.constant.Pages;
 import by.epam.constant.Parameters;
 import by.epam.entity.Publication;
 import by.epam.exception.ServiceException;
-import by.epam.pool.AdminService;
-import by.epam.service.PublicationService;
+import by.epam.service.admin.impl.AdminServiceImpl;
+import by.epam.service.publication.impl.PublicationServiceImpl;
 import by.epam.view.View;
 import java.io.File;
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +20,9 @@ public class DeletePublicationCommand extends AbstractCommand {
     @Override
     public View execute(HttpServletRequest request) {
         int publicationId = Integer.parseInt(request.getParameter(Parameters.PUBLICATION_ID));
-        AdminService adminService = new AdminService();
+        AdminServiceImpl adminService = new AdminServiceImpl();
         HttpSession session = request.getSession();
-        PublicationService publicationService = new PublicationService();
+        PublicationServiceImpl publicationService = new PublicationServiceImpl();
         View view = new View();
         view.setViewType(View.ViewType.REDIRECT);
             try {

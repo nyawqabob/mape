@@ -12,8 +12,8 @@ public class LoginValidator extends AbstractValidator {
         String login = request.getParameter(Parameters.LOGIN);
         String password = request.getParameter(Parameters.PASSWORD);
         List<String> messages = new ArrayList<>();
-        checkOnEmptyAndLength(login, messages, Parameters.LOGIN);
-        checkOnEmptyAndLength(password, messages, Parameters.PASSWORD);
+        checkOnRegExp(login, messages, Parameters.LOGIN);
+        checkOnRegExp(password, messages, Parameters.PASSWORD);
         if (!messages.isEmpty()) {
             setMessageAttribute(messages, request, Attributes.LOGIN_WRONG_DATA_ERROR);
         }

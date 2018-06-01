@@ -7,10 +7,11 @@ import by.epam.constant.Pages;
 import by.epam.constant.Parameters;
 import by.epam.entity.User;
 import by.epam.exception.ServiceException;
-import by.epam.pool.AdminService;
-import by.epam.service.BaseService;
-import by.epam.service.PublicationService;
-import by.epam.service.UserService;
+import by.epam.handler.PasswordHandler;
+import by.epam.service.admin.impl.AdminServiceImpl;
+import by.epam.service.base.impl.BaseServiceImpl;
+import by.epam.service.publication.impl.PublicationServiceImpl;
+import by.epam.service.user.impl.UserServiceImpl;
 import by.epam.view.View;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,9 +29,10 @@ public class LoginCommand extends AbstractCommand {
         LoginValidator loginValidator = new LoginValidator();
         if (loginValidator.isValid(request)) {
             try {
-                BaseService baseService = new BaseService();
-                UserService userService = new UserService();
-                baseService.checkParameters(login, pass);
+                String hashedPass = PasswordHandler.getHashedPassword(pass);
+                BaseServiceImpl baseService = new BaseServiceImpl();
+                UserServiceImpl userService = new UserServiceImpl();
+                baseService.checkNamePassword(login, hashedPass);
                 User user = userService.takeUserByName(login);
                 session.setAttribute(Attributes.USER_OBJ, user);
                 if (Constants.NOT_BANNED_STATUS.equals(user.getStatus())) {

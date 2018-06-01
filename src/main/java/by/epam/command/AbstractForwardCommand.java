@@ -8,10 +8,10 @@ import by.epam.entity.Payment;
 import by.epam.entity.Publication;
 import by.epam.entity.User;
 import by.epam.exception.ServiceException;
-import by.epam.pool.AdminService;
-import by.epam.service.PaymentService;
-import by.epam.service.PublicationService;
-import by.epam.service.UserService;
+import by.epam.service.admin.impl.AdminServiceImpl;
+import by.epam.service.payment.impl.PaymentServiceImpl;
+import by.epam.service.publication.impl.PublicationServiceImpl;
+import by.epam.service.user.impl.UserServiceImpl;
 import by.epam.view.View;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public abstract class AbstractForwardCommand extends AbstractCommand {
         }
     }
 
-       /**
+    /**
      * Method need to choose admin page
      *
      * @param request need to take parameters and session
@@ -68,9 +68,9 @@ public abstract class AbstractForwardCommand extends AbstractCommand {
     private void handleAdminMainAttributes(HttpServletRequest request) throws ServiceException {
         String userName = request.getParameter(Parameters.FIND_PAYMENT_NAME);
         HttpSession session = request.getSession();
-        PaymentService paymentService = new PaymentService();
-        AdminService adminService = new AdminService();
-        UserService userService = new UserService();
+        PaymentServiceImpl paymentService = new PaymentServiceImpl();
+        AdminServiceImpl adminService = new AdminServiceImpl();
+        UserServiceImpl userService = new UserServiceImpl();
         User user = userService.takeUserByName(userName);
         double systemBalance = adminService.takeSystemBalance();
         List<Payment> payments;
@@ -88,7 +88,7 @@ public abstract class AbstractForwardCommand extends AbstractCommand {
         String type = request.getParameter(Parameters.TYPE);
         String publicationName = request.getParameter(Parameters.FIND_PUBLICATION_NAME);
         HttpSession session = request.getSession();
-        PublicationService publicationService = new PublicationService();
+        PublicationServiceImpl publicationService = new PublicationServiceImpl();
         List<Publication> publications;
         if (!(type == null || "".equals(type))) {
             publications = publicationService.takeConcretePublicationsByType(type);
@@ -106,7 +106,7 @@ public abstract class AbstractForwardCommand extends AbstractCommand {
     private void handleAdminUsersAttributes(HttpServletRequest request) throws ServiceException {
         String userName = request.getParameter(Parameters.FIND_USER_NAME);
         HttpSession session = request.getSession();
-        UserService userService = new UserService();
+        UserServiceImpl userService = new UserServiceImpl();
         List<User> users = new ArrayList<>();
         if (!(userName == null || "".equals(userName))) {
             User user = userService.takeUserByName(userName);
@@ -123,7 +123,7 @@ public abstract class AbstractForwardCommand extends AbstractCommand {
         String publicationName = request.getParameter(Parameters.FIND_PUBLICATION_NAME);
         HttpSession session = request.getSession();
         String username = user.getName();
-        PublicationService publicationService = new PublicationService();
+        PublicationServiceImpl publicationService = new PublicationServiceImpl();
         List<Publication> publications;
         if (!(type == null || "".equals(type))) {
             publications = publicationService.takeConcreteUserPublicationsByType(username, type);
@@ -143,8 +143,10 @@ public abstract class AbstractForwardCommand extends AbstractCommand {
 
     private void handleUserPaymentsPage(User user, HttpServletRequest request) throws ServiceException {
         HttpSession session = request.getSession();
-        PaymentService paymentService = new PaymentService();
-        session.setAttribute(Attributes.ALL_PAYMENTS, paymentService.takeUserPayments(user.getId()));
+        PaymentServiceImpl paymentService = new PaymentServiceImpl();
+        int userId = user.getId();
+        List<Payment> payments = paymentService.takeUserPayments(userId);
+        session.setAttribute(Attributes.USER_PAYMENTS, payments);
 
     }
 }

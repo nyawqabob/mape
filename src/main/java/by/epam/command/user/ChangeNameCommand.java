@@ -7,8 +7,9 @@ import by.epam.constant.Pages;
 import by.epam.constant.Parameters;
 import by.epam.entity.User;
 import by.epam.exception.ServiceException;
-import by.epam.service.BaseService;
-import by.epam.service.UserService;
+import by.epam.handler.PasswordHandler;
+import by.epam.service.base.impl.BaseServiceImpl;
+import by.epam.service.user.impl.UserServiceImpl;
 import by.epam.view.View;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,14 +23,15 @@ public class ChangeNameCommand extends AbstractCommand {
         String pass = request.getParameter(Parameters.PASSWORD);
         HttpSession session = request.getSession();
         String newName = request.getParameter(Parameters.NEW_LOGIN);
-        UserService userService = new UserService();
-        BaseService baseService = new BaseService();
+        UserServiceImpl userService = new UserServiceImpl();
+        BaseServiceImpl baseService = new BaseServiceImpl();
         View view = new View();
         view.setViewType(View.ViewType.REDIRECT);
         ChangeNameValidator changeNameValidator = new ChangeNameValidator();
         if (changeNameValidator.isValid(request)) {
             try {
-                baseService.checkParameters(oldName, pass);
+                String hashedPass = PasswordHandler.getHashedPassword(pass);
+                baseService.checkNamePassword(oldName, hashedPass);
                 userService.setName(oldName, newName);
                 User user = userService.takeUserByName(newName);
                 session.setAttribute(Attributes.USER_OBJ, user);

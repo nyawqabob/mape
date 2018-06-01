@@ -8,11 +8,22 @@ public class User extends Entity {
     private double balance;
     private String role;
     private String status;
+    private String email;
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
@@ -29,6 +40,7 @@ public class User extends Entity {
         return role;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -53,6 +65,7 @@ public class User extends Entity {
         this.pass = pass;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
@@ -60,14 +73,14 @@ public class User extends Entity {
     public User() {
     }
 
-    public User(int id, String name, String pass, double balance, String role, String status) {
+    public User(int id, String name, String pass, double balance, String role, String status, String email) {
         this.id = id;
         this.pass = pass;
         this.balance = balance;
         this.role = role;
         this.status = status;
         this.name = name;
+        this.email = email;
     }
-
 
 }

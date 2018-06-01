@@ -30,6 +30,8 @@
     <fmt:message bundle="${locale}" key="text.home.local.showpapers" var="showpapers"/>
     <fmt:message bundle="${locale}" key="text.home.local.showmagazines" var="showmagazines"/>
     <fmt:message bundle="${locale}" key="text.home.local.showbooks" var="showbooks"/>
+    <fmt:message bundle="${locale}" key="text.publication.local.onlyletters" var="onlyletters"/>
+    <fmt:message bundle="${locale}" key="text.publication.local.loginandpasswordvalidator" var="forloginandpass"/>
     <fmt:message bundle="${locale}" key="text.home.local.showall" var="showall"/>
     <fmt:message bundle="${locale}" key="text.main.local.ru" var="ru_button"/>
     <fmt:message bundle="${locale}" key="text.main.local.en" var="en_button"/>
@@ -137,7 +139,7 @@
                                 <br/>
                                 <form name="deletePublicationForm" method="GET" action="<c:url value="/controller/user"/>">
                                     ${findpublications}:<br/>
-                                    <input type="text" name="findpublicationname" value="" required="true"/>
+                                    <input type="text" name="findpublicationname" value="" required="true" maxlength="45"  pattern="^(?=.{2,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" title="${forloginandpass}"/>
                                     <input type="submit" class="ban_button" value="Find"/>
                                 </form>
                             </div>
@@ -176,11 +178,11 @@
                                 <br/>
                                 <form name="deletePublicationForm" method="POST" action="<c:url value="/controller/changename"/>">
                                     ${oldlogin}
-                                    <input type="text" name="oldlogin" value="" required="true"/>
+                                    <input type="text" name="oldlogin" value="" required="true"  maxlength="45"  pattern="[a-zA-Z0-9_.-]*$" title="${forloginandpass}"/>
                                     ${newlogin}
-                                    <input type="text" name="newlogin" value="" required="true" maxlength="45"/>
+                                    <input type="text" name="newlogin" value="" required="true" maxlength="45" pattern="[a-zA-Z0-9_.-]*$" title="${forloginandpass}"/>
                                     ${password}
-                                    <input type="text" name="password" value="" required="true"/>
+                                    <input type="password" name="password" value="" required="true" maxlength="45" pattern="[a-zA-Z0-9_.-]*$" title="${forloginandpass}"/>
                                     <input type="submit" class="ban_button" value="Ok"/>
                                 </form>
                             </div>
@@ -201,11 +203,11 @@
                                 <br/>
                                 <form name="deletePublicationForm" method="POST" action="<c:url value="/controller/changepassword"/>">
                                     ${login}
-                                    <input type="text" name="login" value="" required="true"/>
+                                    <input type="text" name="login" value="" required="true" maxlength="45" pattern="[a-zA-Z0-9_.-]*$" title="${forloginandpass}"/>
                                     ${password}
-                                    <input type="text" name="password" value="" required="true"/>
+                                    <input type="password" name="password" value="" required="true" maxlength="45" pattern="[a-zA-Z0-9_.-]*$" title="${forloginandpass}"/>
                                     ${newpassword}
-                                    <input type="text" name="newpassword" value="" required="true" maxlength="45"/>
+                                    <input type="password" name="newpassword" value="" required="true" maxlength="45" pattern="[a-zA-Z0-9_.-]*$" title="${forloginandpass}"/>
                                     <input type="submit" class="ban_button" value="Ok"/>
                                 </form>
                             </div>

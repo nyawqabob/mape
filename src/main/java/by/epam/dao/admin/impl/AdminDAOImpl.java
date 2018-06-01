@@ -31,7 +31,7 @@ public class AdminDAOImpl extends AbstractDAO implements AdminDAO {
     }
 
     @Override
-    public void setUserStatus(String username, String status) throws DAOException {
+    public void changeUserStatus(String username, String status) throws DAOException {
         try {
             int rows = executeUpdate(SQL_UPDATE_USER_STATUS, status, username);
             if (rows != 1) {
@@ -44,7 +44,7 @@ public class AdminDAOImpl extends AbstractDAO implements AdminDAO {
     }
 
     @Override
-    public void setUserName(String newName, String oldName) throws DAOException {
+    public void changeUserName(String newName, String oldName) throws DAOException {
         try {
             int rows = executeUpdate(SQL_UPDATE_USERNAME, newName, oldName);
             if (rows != 1) {
@@ -57,7 +57,7 @@ public class AdminDAOImpl extends AbstractDAO implements AdminDAO {
     }
 
     @Override
-    public void setPublicationName(String newName, int id) throws DAOException {
+    public void changePublicationName(String newName, int id) throws DAOException {
         try {
             int rows = executeUpdate(SQL_UPDATE_PUBLICATION_NAME, newName, id);
             if (rows != 1) {
@@ -70,7 +70,7 @@ public class AdminDAOImpl extends AbstractDAO implements AdminDAO {
     }
 
     @Override
-    public void setPublicationPrice(int id, int newPrice) throws DAOException {
+    public void changePublicationPrice(int id, int newPrice) throws DAOException {
         try {
             int rows = executeUpdate(SQL_UPDATE_PUBLICATION_PRICE, newPrice, id);
             if (rows != 1) {
@@ -83,7 +83,7 @@ public class AdminDAOImpl extends AbstractDAO implements AdminDAO {
     }
 
     @Override
-    public void setPublicationType(int id, String newStatus) throws DAOException {
+    public void changePublicationType(int id, String newStatus) throws DAOException {
         try {
             int rows = executeUpdate(SQL_UPDATE_PUBLICATION_TYPE, newStatus, id);
             if (rows != 1) {
@@ -96,7 +96,7 @@ public class AdminDAOImpl extends AbstractDAO implements AdminDAO {
     }
 
     @Override
-    public void setUserBalance(String username, int newAmount) throws DAOException {
+    public void changeUserBalance(String username, int newAmount) throws DAOException {
         try {
             int rows = executeUpdate(SQL_UPDATE_USER_BALANCE, newAmount, username);
             if (rows != 1) {
@@ -131,6 +131,7 @@ public class AdminDAOImpl extends AbstractDAO implements AdminDAO {
         }
     }
 
+    @Override
     public double takeSystemBalance() throws DAOException {
         double systemBalance;
         try {
@@ -150,7 +151,7 @@ public class AdminDAOImpl extends AbstractDAO implements AdminDAO {
     }
 
     @Override
-    public void setSystemBalance(double newBalance) throws DAOException {
+    public void changeSystemBalance(double newBalance) throws DAOException {
         try {
             executeUpdate(SQL_SET_SYSTEM_BALANCE, newBalance);
         } catch (SQLException e) {

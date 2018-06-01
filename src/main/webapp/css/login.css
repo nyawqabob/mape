@@ -4,9 +4,125 @@ body {
     background: url(../images/jspimages/background_two.jpg);
     background-size: cover;
 }
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 5; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.modal_helper{
+    width: 20%;
+    padding-left: 40%;
+}
+.success{
+    position: fixed; /* Stay in place */
+    z-index: 5; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */   
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.closebalance {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.closebalance:hover,close
+.closebalance:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+.forgot_input{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    height: 10px;
+    display: inline-block;
+    border: 1px solid black;
+    box-sizing: border-box;
+    box-shadow: 0 0 1px rgba(0,0,0,0.3);
+}
+
+.a_login{
+    text-align: center;
+}
+
+.a_login:hover{
+    cursor: pointer;
+}
 
 
-input[type=text], input[type=password] {
+.input_login {
     width: 25%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -46,6 +162,17 @@ input[type=text], input[type=password] {
     text-align: center;
     color: red;
 }
+
+.submit:hover {
+    opacity: 0.8;
+
+}
+.submit{
+    text-align: center;
+    font-family: Trebuchet MS;
+    cursor: pointer;
+    background-color: #4CAF50;
+}
 .submit-error:hover {
     opacity: 0.8;
 
@@ -72,7 +199,7 @@ form {
 /*input[type=submit]:hover {
     opacity: 0.8;
 }*/
-input[type=submit] {
+.main_button {
     width: 18%;
     font-weight: 700;
     background-color: #4CAF50;
@@ -82,7 +209,7 @@ input[type=submit] {
     transition: 0.2s;
     cursor: pointer;
 } 
-input[type=submit]:hover {
+.main_button:hover {
     opacity: 0.8;
 }
 
@@ -95,9 +222,22 @@ img.avatar {
     width: 10%;
     border-radius: 50%;
 }
+.success-msg {
+    color: #270;
+    background-color: #DFF2BF;
+    border: solid 1px black;
+}
+.info-msg,
+.success-msg,
+.warning-msg,
+.error-msg {
+    margin: 60px auto;
+    padding: 10px;
+    width: 15%;
+    text-align: center;
+}
 
-
-
-.jpa{
-
+.forgot{
+    margin-top: 1%;
+    text-align: center;
 }

@@ -11,7 +11,7 @@ public class SetPublicationNameValidator extends AbstractValidator  {
     public boolean isValid(HttpServletRequest request) {
         String newName = request.getParameter(Parameters.NEW_PUBLICATION_NAME);
         List<String> messages = new ArrayList<>();
-        checkOnEmptyAndLength(newName, messages, Parameters.NEW_PUBLICATION_NAME);
+        checkOnRegExp(newName, messages, Parameters.NEW_PUBLICATION_NAME);
         if (!messages.isEmpty()) {
             setMessageAttribute(messages, request, Attributes.PUBLICATION_NAME_ERROR);
         }

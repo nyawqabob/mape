@@ -4,6 +4,7 @@ public final class Parameters {
 
     public static final String PASSWORD = "password";
     public static final String LOGIN = "login";
+    public static final String EMAIL = "email";
     public static final String OLD_LOGIN = "oldlogin";
     public static final String NEW_LOGIN = "newlogin";
     public static final String PUBLICATION_NAME = "publicationname";

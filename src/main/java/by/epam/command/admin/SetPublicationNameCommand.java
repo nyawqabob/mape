@@ -5,7 +5,7 @@ import by.epam.constant.Attributes;
 import by.epam.constant.Pages;
 import by.epam.constant.Parameters;
 import by.epam.exception.ServiceException;
-import by.epam.pool.AdminService;
+import by.epam.service.admin.impl.AdminServiceImpl;
 import by.epam.validator.SetPublicationNameValidator;
 import by.epam.view.View;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ public class SetPublicationNameCommand extends AbstractCommand {
         int id = Integer.parseInt(request.getParameter(Parameters.PUBLICATION_ID));
         String newName = request.getParameter(Parameters.NEW_PUBLICATION_NAME);
         HttpSession session = request.getSession();
-        AdminService adminService = new AdminService();
+        AdminServiceImpl adminService = new AdminServiceImpl();
         SetPublicationNameValidator validator = new SetPublicationNameValidator();
         View view = new View();
         view.setViewType(View.ViewType.REDIRECT);

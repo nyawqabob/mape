@@ -10,8 +10,12 @@ public class ChangePasswordValidator extends AbstractValidator {
 
     public boolean isValid(HttpServletRequest request) {
         String newPassword = request.getParameter(Parameters.NEW_PASSWORD);
+        String password = request.getParameter(Parameters.PASSWORD);
+        String login = request.getParameter(Parameters.LOGIN);
         List<String> messages = new ArrayList<>();
-        checkOnEmptyAndLength(newPassword, messages, Parameters.NEW_PASSWORD);
+        checkOnRegExp(newPassword, messages, Parameters.NEW_PASSWORD);
+        checkOnRegExp(password, messages, Parameters.PASSWORD);
+        checkOnRegExp(login, messages, Parameters.LOGIN);
         if (!messages.isEmpty()) {
             setMessageAttribute(messages, request, Attributes.USER_NAME_ERROR);
         }

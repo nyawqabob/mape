@@ -25,6 +25,9 @@
     <fmt:message bundle="${locale}" key="text.users.local.changebalance" var="changebalance"/>
     <fmt:message bundle="${locale}" key="text.users.local.action" var="action"/>
     <fmt:message bundle="${locale}" key="text.admin.local.actions" var="actions"/>
+    <fmt:message bundle="${locale}" key="text.publication.local.onlynumber" var="onlynumber"/>
+    <fmt:message bundle="${locale}" key="text.publication.local.onlyletters" var="onlyletters"/>
+    <fmt:message bundle="${locale}" key="text.publication.local.loginandpasswordvalidator" var="forloginandpass"/>
     <fmt:message bundle="${locale}" key="text.admin.local.logout" var="logout"/>
     <fmt:message bundle="${locale}" key="text.home.local.balance" var="balancee"/>
     <fmt:message bundle="${locale}" key="text.admin.local.usermanager" var="usermanager"/>
@@ -128,7 +131,7 @@
                                  <br/>
                                 <form name="deletePublicationForm" method="GET" action="<c:url value="/controller/admin/users"/>">
                                     ${finduser}:<br/>
-                                    <input type="text" name="findusername" value="" required="true"/>
+                                    <input type="text" name="findusername" value="" required="true" maxlength="45"  pattern="[a-zA-Z0-9_.-]*$" title="${forloginandpass}"/>
                                     <input type="submit" class="submit" value="${findd}"/>
                                 </form>
                             </div>
@@ -163,7 +166,7 @@
                                 <div class="modal-body">
                                     <form id="delete_form" method="POST" action="<c:url value="/controller/adminchangename"/>">
                                         <input type="hidden" name="login" value="${allusers.name}"/>
-                                        <input type="text" maxlength="45" name="newlogin" value="" required="true"/>
+                                        <input type="text" maxlength="45" name="newlogin" value="" required="true" maxlength="45"  pattern="[a-zA-Z0-9_.-]*$" title="${forloginandpass}"/>
                                         <input type="submit" value="Ok" class="submit"></form>
                                 </div>
 
@@ -182,7 +185,7 @@
                                 <div class="modal-body">
                                     <form id="delete_form" method="POST" action="<c:url value="/controller/changebalance"/>">
                                         <input type="hidden" name="login" value="${allusers.name}"/>
-                                        <input type="text" maxlength="45" name="newbalance" value="" required="true"/>
+                                        <input type="text" maxlength="45" name="newbalance" value="" required="true" maxlength="45"  pattern="[a-zA-Z0-9_.-]*$" title="${forloginandpass}"/>
                                         <input type="submit" value="Ok" class="submit"></form>
                                 </div>
                             </div>

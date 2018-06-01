@@ -6,8 +6,9 @@ import by.epam.constant.Pages;
 import by.epam.constant.Parameters;
 import by.epam.entity.User;
 import by.epam.exception.ServiceException;
-import by.epam.service.BaseService;
-import by.epam.service.UserService;
+import by.epam.handler.PasswordHandler;
+import by.epam.service.base.impl.BaseServiceImpl;
+import by.epam.service.user.impl.UserServiceImpl;
 import by.epam.validator.ChangePasswordValidator;
 import by.epam.view.View;
 import javax.servlet.http.HttpServletRequest;
@@ -21,15 +22,17 @@ public class ChangePasswordCommand extends AbstractCommand {
         String pass = request.getParameter(Parameters.PASSWORD);
         HttpSession session = request.getSession();
         String newPassword = request.getParameter(Parameters.NEW_PASSWORD);
-        UserService userService = new UserService();
-        BaseService baseService = new BaseService();
+        UserServiceImpl userService = new UserServiceImpl();
+        BaseServiceImpl baseService = new BaseServiceImpl();
         View view = new View();
         view.setViewType(View.ViewType.REDIRECT);
         ChangePasswordValidator changePasswordValidator = new ChangePasswordValidator();
         if (changePasswordValidator.isValid(request)) {
             try {
-                baseService.checkParameters(username, pass);
-                userService.setPassword(username, newPassword);
+                String hashedPass = PasswordHandler.getHashedPassword(pass);
+                String hashedNewPass = PasswordHandler.getHashedPassword(newPassword);
+                baseService.checkNamePassword(username, hashedPass);
+                userService.setPassword(username, hashedNewPass);
                 User user = userService.takeUserByName(username);
                 session.setAttribute(Attributes.USER_OBJ, user);
                 session.setAttribute(Attributes.USER_PASSWORD_SUCCESS, "Password was changed");

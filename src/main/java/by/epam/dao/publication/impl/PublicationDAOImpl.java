@@ -21,7 +21,9 @@ public class PublicationDAOImpl extends AbstractEntityDAO<Publication> implement
     private static final Logger LOGGER = LogManager.getLogger(PublicationDAOImpl.class);
 
     private static final String SQL_SELECT_PUBLICATIONOBJ_BY_ID = "SELECT * FROM publications WHERE id=?";
-    private static final String SQL_SELECT_PUBLICATIONS_BY_USER = "SELECT * FROM publications, users, user_publication WHERE publications.id = user_publication.publication_id AND users.id = user_publication.user_id AND users.login = ?";
+    private static final String SQL_SELECT_PUBLICATIONS_BY_USER = "SELECT publications.* FROM (SELECT publication_id AS pub_id FROM"
+            + " user_publication WHERE user_id = (SELECT id FROM users WHERE users.login = ?))"
+            + " AS T LEFT JOIN publications ON publications.id = pub_id";
     private static final String SQL_SELECT_ALL_PUBLICATION = "SELECT * FROM publications";
     private static final String SQL_SELECT_PUBLICATIONS_BY_NAME = "SELECT * FROM publications WHERE name=?";
     private static final String SQL_SELECT_PUBLICATIONS_BY_TYPE = "SELECT * FROM publications WHERE type=?";
@@ -40,6 +42,7 @@ public class PublicationDAOImpl extends AbstractEntityDAO<Publication> implement
         this.connection = connection;
     }
 
+    @Override
     public Publication takePublicationById(int publicationId) throws DAOException {
         Publication publication = new Publication();
         PreparedStatement statement = null;
@@ -54,6 +57,7 @@ public class PublicationDAOImpl extends AbstractEntityDAO<Publication> implement
         return publication;
     }
 
+    @Override
     public Publication takeChippiestPublications() throws DAOException {
         Publication publication;
         try {
@@ -69,7 +73,8 @@ public class PublicationDAOImpl extends AbstractEntityDAO<Publication> implement
         return publication;
     }
 
-    public void setPublicationImage(int publicationId, String newImage) throws DAOException {
+    @Override
+    public void changePublicationImage(int publicationId, String newImage) throws DAOException {
         try {
             int rows = executeUpdate(SQL_SELECT_IMAGE_BY_PUBLICATION_ID, publicationId, newImage);
             if (rows != 1) {
@@ -81,6 +86,7 @@ public class PublicationDAOImpl extends AbstractEntityDAO<Publication> implement
         }
     }
 
+    @Override
     public List<Publication> takeAllPublications() throws DAOException {
         List<Publication> publications = new ArrayList<>();
         PreparedStatement statement = null;
@@ -95,6 +101,7 @@ public class PublicationDAOImpl extends AbstractEntityDAO<Publication> implement
         return publications;
     }
 
+    @Override
     public List<Publication> takeUserPublications(String username) throws DAOException {
         List<Publication> publications = new ArrayList<>();
         try {
@@ -109,6 +116,7 @@ public class PublicationDAOImpl extends AbstractEntityDAO<Publication> implement
         return publications;
     }
 
+    @Override
     public List<Publication> takeConcretePublicationsByType(String publicationType) throws DAOException {
         List<Publication> publications = new ArrayList<>();
         try {
@@ -123,6 +131,7 @@ public class PublicationDAOImpl extends AbstractEntityDAO<Publication> implement
         return publications;
     }
 
+    @Override
     public List<Publication> takeConcretePublicationsByName(String publicationName) throws DAOException {
         List<Publication> publications = new ArrayList<>();
         try {
@@ -137,6 +146,7 @@ public class PublicationDAOImpl extends AbstractEntityDAO<Publication> implement
         return publications;
     }
 
+    @Override
     public List<Publication> takeConcreteUserPublicationsByType(String username, String publicationType) throws DAOException {
         List<Publication> publications = new ArrayList<>();
         try {
@@ -151,6 +161,7 @@ public class PublicationDAOImpl extends AbstractEntityDAO<Publication> implement
         return publications;
     }
 
+    @Override
     public List<Publication> takeConcreteUserPublicationsByName(String username, String publicationName) throws DAOException {
         List<Publication> publications = new ArrayList<>();
         try {

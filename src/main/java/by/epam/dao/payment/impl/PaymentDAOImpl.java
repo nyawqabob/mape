@@ -19,6 +19,12 @@ public class PaymentDAOImpl extends AbstractEntityDAO<Payment> implements Paymen
 
     private static final String SQL_SELECT_PAYMENTS_BY_USERID = "SELECT * FROM payments WHERE userid = ?";
     private static final String SQL_SELECT_ALL_PAYMENTS = "SELECT * FROM payments";
+    private static final String AMOUNT = "amount";
+    private static final String DATE = "date";
+    private static final String PUBLICATION_NAME = "publication_name";
+    private static final String SUBSCRIBTION_PERIOD = "subscribtion_period";
+    private static final String USER_ID = "userid";
+    private static final String FINISH_DATE = "data_finish";
 
     public PaymentDAOImpl(Connection connection) {
         this.connection = connection;
@@ -57,12 +63,12 @@ public class PaymentDAOImpl extends AbstractEntityDAO<Payment> implements Paymen
         List<Payment> payments = new ArrayList<>();
         try {
             while (resultSet.next()) {
-                double amount = resultSet.getDouble("amount");
-                String date = resultSet.getString("date");
-                String publicationName = resultSet.getString("publication_name");
-                int subscribtionPeriod = resultSet.getInt("subscribtion_period");
-                int userId = resultSet.getInt("userid");
-                String finishDate = resultSet.getString("data_finish");
+                double amount = resultSet.getDouble(AMOUNT);
+                String date = resultSet.getString(DATE);
+                String publicationName = resultSet.getString(PUBLICATION_NAME);
+                int subscribtionPeriod = resultSet.getInt(SUBSCRIBTION_PERIOD);
+                int userId = resultSet.getInt(USER_ID);
+                String finishDate = resultSet.getString(FINISH_DATE);
                 Payment payment = new Payment(amount, date, publicationName, subscribtionPeriod, userId, finishDate);
                 payments.add(payment);
             }

@@ -12,7 +12,6 @@
     <fmt:message bundle="${locale}" key="text.main.local.by" var="by"/>
     <head>
         <link rel="stylesheet" type="text/css" href="<c:url value='/css/footer.css' />"/>
-
         <script src="<c:url value='/js/admin.js' />" type="text/javascript"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
         <title></title>

@@ -4,7 +4,6 @@ import by.epam.dao.AbstractDAO;
 import by.epam.dao.base.BaseDAO;
 import by.epam.exception.DAOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

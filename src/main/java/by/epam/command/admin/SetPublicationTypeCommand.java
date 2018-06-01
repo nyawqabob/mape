@@ -5,7 +5,7 @@ import by.epam.constant.Attributes;
 import by.epam.constant.Pages;
 import by.epam.constant.Parameters;
 import by.epam.exception.ServiceException;
-import by.epam.pool.AdminService;
+import by.epam.service.admin.impl.AdminServiceImpl;
 import by.epam.view.View;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,7 +17,7 @@ public class SetPublicationTypeCommand extends AbstractCommand {
         int id = Integer.parseInt(request.getParameter(Parameters.PUBLICATION_ID));
         String newType = request.getParameter(Parameters.NEW_TYPE);
         HttpSession session = request.getSession();
-        AdminService adminService = new AdminService();
+        AdminServiceImpl adminService = new AdminServiceImpl();
         View view = new View();
         view.setViewType(View.ViewType.REDIRECT);
         try {

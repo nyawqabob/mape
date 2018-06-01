@@ -9,7 +9,7 @@ import by.epam.constant.Parameters;
 import by.epam.entity.Publication;
 import by.epam.entity.User;
 import by.epam.exception.ServiceException;
-import by.epam.service.PublicationService;
+import by.epam.service.publication.impl.PublicationServiceImpl;
 import by.epam.view.View;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +37,7 @@ public class ForwardToMainCommand extends AbstractForwardCommand {
 
     private void handleMainAttributes(HttpServletRequest request) throws ServiceException {
         HttpSession session = request.getSession();
-        PublicationService publicationService = new PublicationService();
+        PublicationServiceImpl publicationService = new PublicationServiceImpl();
         session.setAttribute(Attributes.CHIPPIEST_PUBLICATION, publicationService.takeChippiestPublications());
     }
 

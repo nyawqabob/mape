@@ -20,6 +20,9 @@
     <fmt:message bundle="${locale}" key="text.users.local.find" var="findd"/>
     <fmt:message bundle="${locale}" key="text.admin.local.logout" var="logout"/>
     <fmt:message bundle="${locale}" key="text.admin.local.profile" var="profile"/>
+    <fmt:message bundle="${locale}" key="text.publication.local.onlynumber" var="onlynumber"/>
+    <fmt:message bundle="${locale}" key="text.publication.local.onlyletters" var="onlyletters"/>
+    <fmt:message bundle="${locale}" key="text.publication.local.loginandpasswordvalidator" var="forloginandpass"/>
     <fmt:message bundle="${locale}" key="text.home.local.subscribe" var="subscribe"/>
     <fmt:message bundle="${locale}" key="text.admin.local.book" var="book"/>
     <fmt:message bundle="${locale}" key="text.main.local.by" var="by"/>
@@ -112,7 +115,7 @@
                             <br/>
                             <form name="deletePublicationForm" method="GET" action="<c:url value="/controller/main"/>">
                                 ${findpublications}:<br/>
-                                <input type="text" name="findpublicationname" value="" required="true"/>
+                                <input type="text" name="findpublicationname" required="true" pattern="^(?=.{2,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" title="${forloginandpass}"/>
                                 <input type="submit" class="submit" value="${findd}"/>
                             </form>
                         </div>
@@ -166,7 +169,7 @@
                     <form name="subsribeForm" method="POST" action="<c:url value="/controller/subscribe"/>">
                         <input type="hidden" name="publicationid" value="${chippiestpublication.id}"/> 
                         <input type="hidden" name="command" value="subscribe"/>
-                        <input type="text" pattern="[0-9]" name="subscribtionperiods" required="true" placeholder="${subperiods}">
+                        <input type="text" pattern="[0-9]" name="subscribtionperiods" required="true" title="${subperiods}" maxlength="10">
                         <input type="submit" value="${subscribe}" class="pricing-button"/>
                     </form>
                 </div>
@@ -208,7 +211,7 @@
                     <form name="subsribeForm" method="POST" action="<c:url value="/controller/subscribe"/>">
                         <input type="hidden" name="publicationid" value="${publication.id}"/> 
            
-                        <input type="text" name="subscribtionperiods" required="true" placeholder="${subperiods}">
+                        <input type="text" name="subscribtionperiods" required="true" placeholder="${subperiods}" maxlength="10">
                         <input type="submit" value="${subscribe}" class="pricing-button"/>
                     </form>
                 </div>

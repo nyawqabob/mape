@@ -8,9 +8,8 @@ import by.epam.constant.Parameters;
 import by.epam.entity.Publication;
 import by.epam.entity.User;
 import by.epam.exception.ServiceException;
-import by.epam.service.PaymentService;
-import by.epam.service.PublicationService;
-import by.epam.service.UserService;
+import by.epam.service.publication.impl.PublicationServiceImpl;
+import by.epam.service.user.impl.UserServiceImpl;
 import by.epam.view.View;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,7 +20,7 @@ public class SubscribeCommand extends AbstractCommand {
     public View execute(HttpServletRequest request) {
         int subscribtionPeriod;
         HttpSession session = request.getSession();
-        UserService userService = new UserService();
+        UserServiceImpl userService = new UserServiceImpl();
         View view = new View();
         view.setViewType(View.ViewType.REDIRECT);
         try {
@@ -31,7 +30,7 @@ public class SubscribeCommand extends AbstractCommand {
             view.setPagePath(Pages.MAIN_PATH);
             return view;
         }
-        PublicationService publicationService = new PublicationService();
+        PublicationServiceImpl publicationService = new PublicationServiceImpl();
         User user = (User) session.getAttribute(Attributes.USER_OBJ);
         try {
             if (Constants.USER_ROLE.equals(user.getRole())) {

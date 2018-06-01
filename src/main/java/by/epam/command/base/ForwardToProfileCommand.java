@@ -8,7 +8,7 @@ import by.epam.constant.Pages;
 import by.epam.entity.Publication;
 import by.epam.entity.User;
 import by.epam.exception.ServiceException;
-import by.epam.service.PublicationService;
+import by.epam.service.publication.impl.PublicationServiceImpl;
 import by.epam.view.View;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;

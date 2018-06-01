@@ -13,6 +13,8 @@ public final class Attributes {
     public static final String USER_PUBLICATIONS = "userpublications";
     public static final String LOGIN_BANNED_ERROR = "loginbannederror";
     public static final String LOGIN_WRONG_DATA_ERROR = "loginwrongdataerror";
+    public static final String LOGIN_RESTORE_SUCCESS = "loginrestoresuccess";
+    public static final String LOGIN_RESTORE_ERROR = "loginrestoreerror";
     public static final String LANGUAGE = "lang";
     public static final String PUBLICATION_TYPE_SUCCESS = "publicationtypesuccess";
     public static final String PUBLICATION_TYPE_ERROR = "publicationtypeerror";

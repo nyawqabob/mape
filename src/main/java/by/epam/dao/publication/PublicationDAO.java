@@ -12,7 +12,7 @@ public interface PublicationDAO {
 
     public Publication takeChippiestPublications() throws DAOException;
 
-    public void setPublicationImage(int publicationId, String newImage) throws DAOException;
+    public void changePublicationImage(int publicationId, String newImage) throws DAOException;
 
     public List<Publication> takeConcretePublicationsByType(String publicationType) throws DAOException;
 

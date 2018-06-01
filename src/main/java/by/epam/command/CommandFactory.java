@@ -57,6 +57,7 @@ public class CommandFactory {
         command.put("GET/admin/publications", new ForwardToProfileCommand(Pages.PUBLICATIONS_PATH, Pages.USER_PATH));
         command.put("GET/user/payments", new ForwardToProfileCommand(Pages.ADMIN_PATH, Pages.PAYMENTS_PATH));
         command.put("GET/admin/users", new ForwardToProfileCommand(Pages.USERS_PATH, Pages.USERS_PATH));
+        command.put("POST/login/restore", new RestorePasswordCommand());
 
     }
 
