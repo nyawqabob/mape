@@ -62,6 +62,8 @@ public class UserServiceImpl implements UserService {
             }
             LOGGER.error(e.getMessage(), e);
             throw new ServiceException("Publication " + publicationId + " doesn't exist or user " + user.getId() + " doesn't exist", e);
+        } finally {
+            factory.closeConnection();
         }
     }
 
@@ -141,7 +143,7 @@ public class UserServiceImpl implements UserService {
     public User takeUserByName(String username) throws ServiceException {
         DAOFactory factory = new DAOFactory();
         UserDAOImpl dao = factory.getDAO(DAOTypes.USER_DAO);
-        User user = new User();
+        User user;
         try {
             user = dao.takeUserByName(username);
         } catch (DAOException e) {

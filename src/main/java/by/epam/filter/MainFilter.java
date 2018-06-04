@@ -30,6 +30,15 @@ public class MainFilter implements Filter {
         doFilter(request, response, chain);
     }
 
+    /**
+     * Need to check user role when user write main path as url
+     *
+     * @param request need to take session
+     * @param response need to redirect
+     * @param chain need to call doFilter by chain pattern
+     * @throws IOException
+     * @throws ServletException
+     */
     public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpSession session = request.getSession();
         LOGGER.info("Main filter started");

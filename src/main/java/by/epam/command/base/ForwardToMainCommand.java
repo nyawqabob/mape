@@ -11,7 +11,6 @@ import by.epam.entity.User;
 import by.epam.exception.ServiceException;
 import by.epam.service.publication.impl.PublicationServiceImpl;
 import by.epam.view.View;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -27,7 +26,6 @@ public class ForwardToMainCommand extends AbstractForwardCommand {
         try {
             handlePublicationAttributes(request, 3);
             handleMainAttributes(request);
-            
             session.setAttribute(Attributes.BALANCE, user.getBalance());
         } catch (ServiceException ex) {
             view.setPagePath(Pages.LOGIN_PATH);

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
-public class ChangePasswordValidator extends AbstractValidator {
+public class ChangePasswordValidator implements CommonValidator {
 
     public boolean isValid(HttpServletRequest request) {
         String newPassword = request.getParameter(Parameters.NEW_PASSWORD);

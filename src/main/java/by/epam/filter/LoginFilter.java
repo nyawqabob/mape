@@ -17,7 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class LoginFilter implements Filter {
-    
+
     private static final Logger LOGGER = LogManager.getLogger(LoginFilter.class);
 
     @Override
@@ -32,24 +32,33 @@ public class LoginFilter implements Filter {
         doFilter(request, response, chain);
     }
 
+    /**
+     * Need to check user role when user write login path as url
+     *
+     * @param request need to take session
+     * @param response need to redirect
+     * @param chain need to call doFilter by chain pattern
+     * @throws IOException
+     * @throws ServletException
+     */
     public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpSession session = request.getSession();
         LOGGER.info("Login filter started");
-            if (session == null) {
-                return;
-            }
-            String accountRole = (String) session.getAttribute(Attributes.ACCOUNT_ROLE);
-            if (Constants.USER_ROLE.equals(accountRole)) {
-                LOGGER.info("Login filter redirect to user");
-                 response.sendRedirect(Pages.USER_PATH);
-                return;
-            }
-            if (Constants.ADMIN_ROLE.equals(accountRole)) {
-                LOGGER.info("Login filter redirect to admin");
-                response.sendRedirect(Pages.ADMIN_PATH);
-                return;
-            }
-            chain.doFilter(request, response);
+        if (session == null) {
+            return;
+        }
+        String accountRole = (String) session.getAttribute(Attributes.ACCOUNT_ROLE);
+        if (Constants.USER_ROLE.equals(accountRole)) {
+            LOGGER.info("Login filter redirect to user");
+            response.sendRedirect(Pages.USER_PATH);
+            return;
+        }
+        if (Constants.ADMIN_ROLE.equals(accountRole)) {
+            LOGGER.info("Login filter redirect to admin");
+            response.sendRedirect(Pages.ADMIN_PATH);
+            return;
+        }
+        chain.doFilter(request, response);
     }
 
     @Override

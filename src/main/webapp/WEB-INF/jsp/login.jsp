@@ -89,7 +89,7 @@
                         <br/>
                         <form name="restorePasswordForm" method="POST" action="<c:url value="/controller/login/restore"/>">
                             ${email} <br/>
-                            <input class ="forgot_input" type="text" name="email" value="" required="true"/>
+                            <input class ="forgot_input" type="email" name="email" value="" required="true"/>
                             <input type="submit" class="submit" value="Ok"/>
                         </form>
                     </div>

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
-public class SetPublicationNameValidator extends AbstractValidator  {
+public class SetPublicationNameValidator implements CommonValidator  {
 
     public boolean isValid(HttpServletRequest request) {
         String newName = request.getParameter(Parameters.NEW_PUBLICATION_NAME);

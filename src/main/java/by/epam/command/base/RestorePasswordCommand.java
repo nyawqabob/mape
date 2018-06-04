@@ -16,7 +16,6 @@ import org.apache.commons.lang.RandomStringUtils;
 
 public class RestorePasswordCommand extends AbstractCommand {
 
-    
     @Override
     public View execute(HttpServletRequest request) {
         String email = request.getParameter(Parameters.EMAIL);
@@ -31,7 +30,7 @@ public class RestorePasswordCommand extends AbstractCommand {
                 String generatedPassword = genereateNewPassword();
                 String hashedPassword = PasswordHandler.getHashedPassword(generatedPassword);
                 userService.setPassword(username, hashedPassword);
-                MailSender mailSender = new MailSender();
+                MailSender mailSender = MailSender.getInstance();
                 mailSender.sendNewPassword(email, username, generatedPassword);
                 session.setAttribute(Attributes.LOGIN_RESTORE_SUCCESS, "Check your mail");
                 view.setPagePath(Pages.LOGIN_PATH);
@@ -46,8 +45,6 @@ public class RestorePasswordCommand extends AbstractCommand {
         }
         return view;
     }
-
-    
 
     private String genereateNewPassword() {
         String generatedPassword = RandomStringUtils.randomAlphabetic(20);

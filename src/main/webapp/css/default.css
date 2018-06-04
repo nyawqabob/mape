@@ -469,6 +469,7 @@ input[type="button"]:hover:not(.active) {
 }
 .action-href{
     color: black;
+    margin-bottom: 5%;
 }
 .action-href:hover{
     opacity: 0.3;
@@ -487,8 +488,8 @@ input[type="button"]:hover:not(.active) {
 .pagination-user {
     display: inline-block;
     position: absolute;
-    top: 107%;
-    right: 32%;
+    top: 111%;
+    right: 33%;
     margin-bottom: 7%;
     text-align: center;
 }
@@ -522,7 +523,7 @@ input[type="button"]:hover:not(.active) {
 
 .publication-two {
     position: absolute;
-    top: 52%;
+    top: 54%;
     width: 19.3%;
     float: left;
     background: white;

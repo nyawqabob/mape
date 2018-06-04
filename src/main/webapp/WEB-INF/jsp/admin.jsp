@@ -26,6 +26,7 @@
     <fmt:message bundle="${locale}" key="text.admin.local.subscribeto" var="subscribeto"/>
     <fmt:message bundle="${locale}" key="text.admin.local.at" var="at"/>
     <fmt:message bundle="${locale}" key="text.admin.local.periods" var="periods"/>
+    <fmt:message bundle="${locale}" key="text.admin.local.username" var="username"/>
     <fmt:message bundle="${locale}" key="text.admin.local.paid" var="paid"/>
     <fmt:message bundle="${locale}" key="text.admin.local.logout" var="logout"/>
     <fmt:message bundle="${locale}" key="text.admin.local.manager" var="manager"/>
@@ -68,7 +69,7 @@
                     </c:if>
             </div>
             <div class="header" id="myHeader">
-                <div class="left_header"><a href="<c:url value="/controller/main"/>"><img class="img_header" src="<c:url value="/images/jspimages/logo.png"/>"></a></div>
+                <div class="left_header"><a href="<c:url value="/controller/main?type=all"/>"><img class="img_header" src="<c:url value="/images/jspimages/logo.png"/>"></a></div>
                 <div class="header_right">
                     <a href="<c:url value="/controller/logout"/>" class="header_href">${logout}</a><br/>
                 </div>
@@ -96,7 +97,7 @@
 
                                     <br/>
                                     <form name="deletePublicationForm" method="GET" action="<c:url value="/controller/admin"/>">
-                                        ${findpayments}<br/>
+                                        ${username}:<br/>
                                         <input type="text" name="findpaymentname" value="" required="true"/><br/>
                                         <input type="submit" class="submit" value="${findd}"/>
                                     </form>

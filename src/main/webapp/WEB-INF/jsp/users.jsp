@@ -11,6 +11,7 @@
     <fmt:message bundle="${locale}" key="text.main.local.ru" var="ru_button"/>
     <fmt:message bundle="${locale}" key="text.main.local.en" var="en_button"/>
     <fmt:message bundle="${locale}" key="text.main.local.by" var="by"/>
+    <fmt:message bundle="${locale}" key="text.admin.local.username" var="username"/>
     <fmt:message bundle="${locale}" key="text.admin.local.profile" var="profile"/>
     <fmt:message bundle="${locale}" key="text.users.local.ban" var="ban"/>
     <fmt:message bundle="${locale}" key="text.users.local.unban" var="unban"/>
@@ -99,7 +100,7 @@
                 </div></div>
             </c:if>
         <div class="header" id="myHeader">
-            <div class="left_header"><a href="<c:url value="/controller/main"/>"><img class="img_header" src="<c:url value="/images/jspimages/logo.png"/>"></a></div>
+            <div class="left_header"><a href="<c:url value="/controller/main?type=all"/>"><img class="img_header" src="<c:url value="/images/jspimages/logo.png"/>"></a></div>
             <div class="center_header_publication">
                 <div class="link"><a href="<c:url value="/controller/admin"/>">${profile}</a></div>
             </div>
@@ -130,7 +131,7 @@
                             <div class="modal-body"
                                  <br/>
                                 <form name="deletePublicationForm" method="GET" action="<c:url value="/controller/admin/users"/>">
-                                    ${finduser}:<br/>
+                                    ${username}:<br/>
                                     <input type="text" name="findusername" value="" required="true" maxlength="45"  pattern="[a-zA-Z0-9_.-]*$" title="${forloginandpass}"/>
                                     <input type="submit" class="submit" value="${findd}"/>
                                 </form>
@@ -149,7 +150,7 @@
                 <tr>
                     <th>${name}</th>
                     <th>${balancee}</th>
-                    <th title="1 - banned, 0 - not banned"><span class="dotted">${status}</span></th>
+                    <th title="1 - banned, 0 - not banned">${status}</th>
                     <th align="center" valign="middle" colspan="2">${action}</th>
                 </tr>
                 <c:set var="p" value="1" />
@@ -185,7 +186,7 @@
                                 <div class="modal-body">
                                     <form id="delete_form" method="POST" action="<c:url value="/controller/changebalance"/>">
                                         <input type="hidden" name="login" value="${allusers.name}"/>
-                                        <input type="text" maxlength="45" name="newbalance" value="" required="true" maxlength="45"  pattern="[a-zA-Z0-9_.-]*$" title="${forloginandpass}"/>
+                                        <input type="text" maxlength="45" name="newbalance" value="" required="true" maxlength="45"  pattern="^[ 0-9]+$" title="${onlynumber}"/>
                                         <input type="submit" value="Ok" class="submit"></form>
                                 </div>
                             </div>

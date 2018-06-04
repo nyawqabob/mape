@@ -10,10 +10,13 @@ import by.epam.exception.DAOException;
 import by.epam.pool.ConnectionPool;
 import java.sql.Connection;
 import java.sql.SQLException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DAOFactory {
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final Logger LOGGER = LogManager.getLogger(DAOFactory.class);
     private Connection connection;
 
     /**
@@ -52,24 +55,28 @@ public class DAOFactory {
 
     /**
      * Need to set auto commit of connection to false
+     * @throws DAOException when can't start transaction
      */
-    public void startTransaction() {
+    public void startTransaction() throws DAOException {
         try {
             connection.setAutoCommit(false);
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-        } catch (SQLException e) {
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+        } catch (SQLException ex) {
+            LOGGER.info("Cannot start transaction", ex);
+            throw new DAOException("Cannot start transaction");
         }
     }
 
     /**
      * Need to commit connection and put it back to pool
-     * @throws DAOException
+     * @throws DAOException when can't commit transaction
      */
     public void commitTransaction() throws DAOException {
         try {
             connection.commit();
             connectionPool.putConnectionBack(connection);
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
+            LOGGER.info("Cannot start transaction", ex);
             throw new DAOException("Cannot commit transaction");
         }
     }
@@ -82,7 +89,8 @@ public class DAOFactory {
         try {
             connection.rollback();
             connectionPool.putConnectionBack(connection);
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
+            LOGGER.info("Cannot rollback transaction", ex);
             throw new DAOException("Cannot rollback transaction");
         }
     }

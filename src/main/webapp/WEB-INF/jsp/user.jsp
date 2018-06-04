@@ -41,6 +41,7 @@
     <fmt:message bundle="${locale}" key="text.home.local.week" var="week"/>
     <fmt:message bundle="${locale}" key="text.admin.local.magazine" var="magazine"/>
     <fmt:message bundle="${locale}" key="text.admin.local.paper" var="paper"/>
+    <fmt:message bundle="${locale}" key="text.admin.local.book" var="book"/>
     <fmt:message bundle="${locale}" key="text.home.local.balance" var="balancee"/>
     <c:if test="${not empty userpasswordsuccess}">
         <fmt:message bundle="${locale}" key="text.user.local.userpasswordsuccess" var="usersuccess"/>
@@ -73,7 +74,7 @@
             ${balancee} <b>${balance}</b>
         </div>
         <div class="header" id="myHeader">
-            <div class="left_header"><a href="<c:url value="/controller/main"/>"><img class="img_header" src="<c:url value="/images/jspimages/logo.png"/>"></a></div>
+            <div class="left_header"><a href="<c:url value="/controller/main?type=all"/>"><img class="img_header" src="<c:url value="/images/jspimages/logo.png"/>"></a></div>
             <div class="header_right">
                 <a href="<c:url value="/controller/logout"/>" class="header_href"> ${logout}</a><br/>
             </div>
@@ -151,7 +152,7 @@
                     <a class="action-href" href="<c:url value="/controller/user?type=paper"/>">${showpapers}</a><br/><br/>
                     <a class="action-href" href="<c:url value="/controller/user?type=magazine"/>">${showmagazines}</a><br/><br/>
                     <a class="action-href" href="<c:url value="/controller/user?type=book"/>">${showbooks}</a><br/><br/>
-                    <a class="action-href" href="<c:url value="/controller/user"/>">${showpapers}</a><br/><br/>
+                    <a class="action-href" href="<c:url value="/controller/user"/>">${showall}</a><br/><br/>
                     <u><a onclick="<c:out value="show(${find})"/>" class="action-href">${findpublications}</a></u><br/><br/>
                 </div>
             </div>

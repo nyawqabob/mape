@@ -3,7 +3,6 @@ package by.epam.command;
 import by.epam.constant.Attributes;
 import by.epam.constant.Constants;
 import by.epam.constant.Parameters;
-import by.epam.entity.Entity;
 import by.epam.entity.Payment;
 import by.epam.entity.Publication;
 import by.epam.entity.User;
@@ -12,7 +11,6 @@ import by.epam.service.admin.impl.AdminServiceImpl;
 import by.epam.service.payment.impl.PaymentServiceImpl;
 import by.epam.service.publication.impl.PublicationServiceImpl;
 import by.epam.service.user.impl.UserServiceImpl;
-import by.epam.view.View;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +23,7 @@ public abstract class AbstractForwardCommand extends AbstractCommand {
     private static final String ADMIN_MAIN = "admin";
     private static final String ADMIN_PUBLICIATIONS = "publications";
     private static final String ADMIN_USERS = "users";
+    private static String helpType = "all";
 
     /**
      * Method need to choose user page
@@ -49,6 +48,7 @@ public abstract class AbstractForwardCommand extends AbstractCommand {
      *
      * @param request need to take parameters and session
      * @param adminPageType type of admin page
+     * @param user need to take user id
      * @throws ServiceException
      */
     public void handleAdminPageAttributes(HttpServletRequest request, String adminPageType) throws ServiceException {
@@ -89,17 +89,36 @@ public abstract class AbstractForwardCommand extends AbstractCommand {
         String publicationName = request.getParameter(Parameters.FIND_PUBLICATION_NAME);
         HttpSession session = request.getSession();
         PublicationServiceImpl publicationService = new PublicationServiceImpl();
+        List<Publication> attributePublications = (List<Publication>) session.getAttribute(Attributes.PUBLICATIONS);
         List<Publication> publications;
+        List<Publication> neededPublications;
         if (!(type == null || "".equals(type))) {
+            if ("all".equals(type)) {
+                helpType = "all";
+                publications = publicationService.takeAllPublications();
+                neededPublications = takeNeededList(publications, request, amountOfPages);
+                session.setAttribute(Attributes.PUBLICATIONS, neededPublications);
+                return;
+            }
             publications = publicationService.takeConcretePublicationsByType(type);
+            helpType = type;
         } else {
             if (!(publicationName == null || "".equals(publicationName))) {
                 publications = publicationService.takeConcretePublicationsByName(publicationName);
             } else {
-                publications = publicationService.takeAllPublications();
+                if (attributePublications == null) {
+                    publications = publicationService.takeAllPublications();
+                } else {
+                    if ("all".equals(helpType)) {
+                        publications = publicationService.takeAllPublications();
+                    } else {
+                        publications = publicationService.takeConcretePublicationsByType(helpType);
+                    }
+                }
             }
         }
-        List<Publication> neededPublications = takeNeededList(publications, request, amountOfPages);
+        neededPublications = takeNeededList(publications, request, amountOfPages);
+
         session.setAttribute(Attributes.PUBLICATIONS, neededPublications);
     }
 
@@ -110,7 +129,9 @@ public abstract class AbstractForwardCommand extends AbstractCommand {
         List<User> users = new ArrayList<>();
         if (!(userName == null || "".equals(userName))) {
             User user = userService.takeUserByName(userName);
-            users.add(user);
+            if (!(user.getName() == null)) {
+                users.add(user);
+            }
         } else {
             users = userService.takeUsers();
         }

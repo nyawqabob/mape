@@ -26,7 +26,8 @@ public class AddPublicationCommand extends AbstractCommand {
         String publicationName = request.getParameter(Parameters.PUBLICATION_NAME);
         String publicationType = request.getParameter(Parameters.PUBLICATION_TYPE);
         String publicationPeriodType = request.getParameter(Parameters.PUBLICATION_PERIOD_TYPE);
-        double publicationPrice = Double.parseDouble(request.getParameter(Parameters.PUBLICATION_PRICE));
+        String stringPublicationPrice = request.getParameter(Parameters.PUBLICATION_PRICE);
+        double publicationPrice = Double.parseDouble(stringPublicationPrice);
         HttpSession session = request.getSession();
         AddPublicationValidator addPublicationValidator = new AddPublicationValidator();
         View view = new View();
@@ -61,7 +62,7 @@ public class AddPublicationCommand extends AbstractCommand {
             FileUtils.copyInputStreamToFile(fileContent, file);
             newName = publicationName + publicationType + publicationPrice + ".png";
             File newFile = new File(Constants.IMAGES_PATH + newName);
-            boolean ok = file.renameTo(newFile);
+            file.renameTo(newFile);
         } catch (IOException | ServletException ex) {
             throw new ServiceException("Can't upload, try again later", ex);
         }

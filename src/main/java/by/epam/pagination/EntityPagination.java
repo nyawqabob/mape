@@ -10,10 +10,21 @@ public class EntityPagination<E extends Entity> {
 
     private final List<E> fullList;
 
+    /**
+     * Need to fill list of all entities
+     *
+     * @param allRecords this is all entities
+     */
     public EntityPagination(List<E> allRecords) {
         this.fullList = allRecords;
     }
 
+    /**
+     * Need to take list of page numbers
+     *
+     * @param recordAtOnePage this is number of record at one page
+     * @return list of page numbers
+     */
     public List<Integer> getAmountOfPages(int recordAtOnePage) {
         int amountOfPages = fullList.size() / recordAtOnePage;
         if (fullList.size() % recordAtOnePage != 0) {
@@ -28,9 +39,16 @@ public class EntityPagination<E extends Entity> {
         return pageNumbers;
     }
 
-    public List<E> getPageContent(int amountOfPages, int recordAtOnePage) {
+    /**
+     * Need to take needed list of certain page
+     *
+     * @param numberOfPage this is number of page
+     * @param recordAtOnePage this is number of entities at one pages
+     * @return needed list
+     */
+    public List<E> getPageContent(int numberOfPage, int recordAtOnePage) {
         List<E> neededList = new ArrayList<>();
-        int elementNumber = amountOfPages * recordAtOnePage - recordAtOnePage;
+        int elementNumber = numberOfPage * recordAtOnePage - recordAtOnePage;
         if (fullList.isEmpty()) {
             return neededList;
         }
@@ -43,7 +61,11 @@ public class EntityPagination<E extends Entity> {
         }
         return neededList;
     }
-
+  /**
+     * Need to take needed page number by choosen parameter 
+     * @param request need to take parameter
+     * @return number of page
+     */
     public int getPageNumber(HttpServletRequest request) {
         int pageNumber;
         String param = request.getParameter(Parameters.PAGE);

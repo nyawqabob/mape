@@ -16,6 +16,6 @@
     <body>
         <div class="errorpagediv">
             <span class="errorpage">404</span><br/>
-            <a class="pricing-button" href="<c:url value="/controller/main"/>">Go to the main page</a></div>
+            <a class="pricing-button" href="<c:url value="/controller/main?type=all"/>">Go to the main page</a></div>
     </body>
 </html>

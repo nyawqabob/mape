@@ -13,6 +13,7 @@
     <fmt:message bundle="${locale}" key="text.home.local.findpublications" var="findpublications"/>
     <fmt:message bundle="${locale}" key="text.home.local.showpapers" var="showpapers"/>
     <fmt:message bundle="${locale}" key="text.home.local.showmagazines" var="showmagazines"/>
+    <fmt:message bundle="${locale}" key="text.home.local.publicationname" var="publicationname"/>
     <fmt:message bundle="${locale}" key="text.home.local.showbooks" var="showbooks"/>
     <fmt:message bundle="${locale}" key="text.home.local.showall" var="showall"/>
     <fmt:message bundle="${locale}" key="text.home.local.chippiest" var="chippiest"/>
@@ -79,7 +80,7 @@
             </c:if>
     </div>
     <div class="header" id="myHeader">
-        <div class="left_header"><a href="<c:url value="/controller/main"/>"><img class="img_header" src="<c:url value="/images/jspimages/logo.png"/>"></a></div>
+        <div class="left_header"><a href="<c:url value="/controller/main?type=all"/>"><img class="img_header" src="<c:url value="/images/jspimages/logo.png"/>"></a></div>
         <div class="center_header_publication">
             <div class="link"><a href="<c:url value="/controller/profile"/>">${profile}</a>
             </div>
@@ -114,7 +115,7 @@
 
                             <br/>
                             <form name="deletePublicationForm" method="GET" action="<c:url value="/controller/main"/>">
-                                ${findpublications}:<br/>
+                                ${publicationname}:<br/>
                                 <input type="text" name="findpublicationname" required="true" pattern="^(?=.{2,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" title="${forloginandpass}"/>
                                 <input type="submit" class="submit" value="${findd}"/>
                             </form>
@@ -127,7 +128,7 @@
                 <a class="action-href" href="<c:url value="/controller/main?type=paper"/>">${showpapers}</a><br/><br/>
                 <a class="action-href" href="<c:url value="/controller/main?type=magazine"/>">${showmagazines}</a><br/><br/>
                 <a class="action-href" href="<c:url value="/controller/main?type=book"/>">${showbooks}</a><br/><br/>
-                <a class="action-href" href="<c:url value="/controller/main"/>">${showall}</a><br/><br/>
+                <a class="action-href" href="<c:url value="/controller/main?type=all"/>">${showall}</a><br/><br/>
                 <u><a onclick="<c:out value="show(${find})"/>" class="action-href">${findpublications}</a></u><br/><br/>
             </div>
         </div>
@@ -169,7 +170,7 @@
                     <form name="subsribeForm" method="POST" action="<c:url value="/controller/subscribe"/>">
                         <input type="hidden" name="publicationid" value="${chippiestpublication.id}"/> 
                         <input type="hidden" name="command" value="subscribe"/>
-                        <input type="text" pattern="[0-9]" name="subscribtionperiods" required="true" title="${subperiods}" maxlength="10">
+                        <input type="text" pattern="[0-9]" name="subscribtionperiods" required="true" placeholder="${subperiods}" title="${onlynumbers}" maxlength="10">
                         <input type="submit" value="${subscribe}" class="pricing-button"/>
                     </form>
                 </div>
@@ -211,7 +212,7 @@
                     <form name="subsribeForm" method="POST" action="<c:url value="/controller/subscribe"/>">
                         <input type="hidden" name="publicationid" value="${publication.id}"/> 
            
-                        <input type="text" name="subscribtionperiods" required="true" placeholder="${subperiods}" maxlength="10">
+                        <input type="text" name="subscribtionperiods" required="true" placeholder="${subperiods}" maxlength="10" title="${onlynumbers}">
                         <input type="submit" value="${subscribe}" class="pricing-button"/>
                     </form>
                 </div>

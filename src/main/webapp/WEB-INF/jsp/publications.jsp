@@ -125,7 +125,7 @@
                 </div></div>
             </c:if>
         <div class="header" id="myHeader">
-            <div class="left_header"><a href="<c:url value="/controller/main"/>"><img class="img_header" src="<c:url value="/images/jspimages/logo.png"/>"></a></div>
+            <div class="left_header"><a href="<c:url value="/controller/main?type=all"/>"><img class="img_header" src="<c:url value="/images/jspimages/logo.png"/>"></a></div>
             <div class="center_header_publication">
                 <div class="link"><a href="<c:url value="/controller/admin"/>">${profile}</a></div>
             </div>
@@ -159,8 +159,7 @@
                                 <br/>
                             </div>
                             <div class="modal-body">
-                                <form name="addPublicationForm" method="POST" action="<c:url value="/controller/add"/>" enctype="multipart/form-data">
-                                    <input type="hidden" name="command" value="addpublication"/>
+                                <form name="addPublicationForm" id="any" method="POST" action="<c:url value="/controller/add"/>" enctype="multipart/form-data">
                                     ${newpublname}:<br/>
                                     <input type="text" name="publicationname" value="" required="true" maxlength="45"  pattern="^(?=.{2,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" title="${forloginandpass}"/>
                                     <br/>${newpubltype}:<br/>
@@ -176,7 +175,7 @@
                                         <option value="weak">${week}</option>
                                     </select>
                                     <br/>${newpublprice}:<br/>
-                                    <input type="text" name="publicationprice" maxlength="45" title="${onlynumber}" value="" required="true" pattern="^[ 0-9]+$"/>
+                                    <input type="text" name="publicationprice" maxlength="45" title="${onlynumber}" required="true" pattern="^[ 0-9]+$"/>
                                     <br/>${newpublimage}:<br/>
                                     <input type="file" name="publicationimage" maxlength="45" value="select image" required="true" accept="image/x-png,image/gif,image/jpeg" />
                                     <input type="submit" value="Ok" class="submit"/>
@@ -198,7 +197,7 @@
 
                                 <br/>
                                 <form name="deletePublicationForm" method="GET" action="<c:url value="/controller/admin/publications"/>">
-                                    ${findpublications}<br/>
+                                    ${publicationname}:<br/>
                                     <input type="text" name="findpublicationname" value="" required="true" pattern="^(?=.{2,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" title="${forloginandpass}"/>
                                     <input type="submit" class="submit" value="${findd}"/>
                                 </form>
@@ -211,7 +210,7 @@
                     <a class="action-href" href="<c:url value="/controller/admin/publications?type=paper"/>">${showpapers}</a><br/><br/>
                     <a class="action-href" href="<c:url value="/controller/admin/publications?type=magazine"/>">${showmagazines}</a><br/><br/>
                     <a class="action-href" href="<c:url value="/controller/admin/publications?type=book"/>">${showbooks}</a><br/><br/>
-                    <a class="action-href" href="<c:url value="/controller/admin/publications"/>">${showall}</a><br/><br/>
+                    <a class="action-href" href="<c:url value="/controller/admin/publications?type=all"/>">${showall}</a><br/><br/>
                     <u><a onclick="<c:out value="show(${find})"/>" class="action-href">${findpublications}</a></u><br/><br/>
                     <u><a onclick="<c:out value="show(${add})"/>" class="action-href">${addnewpubl}</a></u><br/><br/>
                 </div>

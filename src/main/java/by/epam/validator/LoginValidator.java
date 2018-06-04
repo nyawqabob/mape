@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
-public class LoginValidator extends AbstractValidator {
+public class LoginValidator implements CommonValidator {
 
     public boolean isValid(HttpServletRequest request) {
         String login = request.getParameter(Parameters.LOGIN);

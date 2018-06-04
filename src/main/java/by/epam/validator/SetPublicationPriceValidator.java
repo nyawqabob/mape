@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
-public class SetPublicationPriceValidator extends AbstractValidator {
+public class SetPublicationPriceValidator implements CommonValidator {
      public boolean isValid(HttpServletRequest request) {
         Integer newPrice = Integer.parseInt(request.getParameter(Parameters.NEW_PRICE));
         List<String> messages = new ArrayList<>();

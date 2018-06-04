@@ -5,6 +5,11 @@ import java.security.NoSuchAlgorithmException;
 
 public class PasswordHandler {
 
+    /**
+     * Need to take hashed password by SHA-1 from default password
+     * @param password need to take not hashed password
+     * @return hashed password
+     */
     public static String getHashedPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");

@@ -25,10 +25,10 @@ import org.apache.logging.log4j.Logger;
 public class CommandFactory {
 
     private static Map<String, AbstractCommand> command;
-    private static final Logger Logger = LogManager.getLogger(CommandFactory.class);
+    private static final Logger LOGGER = LogManager.getLogger(CommandFactory.class);
 
     /**
-     * Need to choose put all possible request to map
+     * Need to put all possible request to map
      */
     public CommandFactory() {
         command = new HashMap<>();
@@ -62,13 +62,14 @@ public class CommandFactory {
     }
 
     /**
-     * Need to take method and path of request. By these parameters take command from the map of class
+     * Need to take method and path of request. By these parameters take command
+     * from the map of class
+     *
      * @param request need to take path and method
      * @return command
      */
     public AbstractCommand getCommand(HttpServletRequest request) {
-
-        Logger.info("request key is " + request.getMethod() + request.getPathInfo());
+        LOGGER.info("request key is " + request.getMethod() + request.getPathInfo());
         String method = request.getMethod();
         String pathInfo = request.getPathInfo();
         return command.get(method + pathInfo);

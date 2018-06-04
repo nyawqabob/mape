@@ -1,16 +1,18 @@
 package by.epam.pool;
 
+import by.epam.constant.PoolData;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayDeque;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.Queue;
-import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,11 +26,20 @@ public class ConnectionPool {
     private static Lock anothLock = new ReentrantLock();
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
 
+    /**
+     * Need to register driver and init properties when pool called in first
+     * time
+     */
     private ConnectionPool() {
         registerJDBCDriver();
         init();
     }
 
+    /**
+     * Singleton method of this class, use double check singleton
+     *
+     * @return needed list
+     */
     public static ConnectionPool getInstance() {
         if (!isCreated.get()) {
             anothLock.lock();
@@ -45,17 +56,22 @@ public class ConnectionPool {
 
     }
 
+    /**
+     * Need to destroy all connections
+     */
     public void destroyConnections() {
-        for (int index = 0; index < poolSize; index++) {
+        Iterator<Connection> iterator = connectionQueue.iterator();
+        while (iterator.hasNext()) {
             Connection connection = null;
             try {
-                connection = connectionQueue.remove();
+                connection = iterator.next();
+                iterator.remove();
             } finally {
                 if (connection != null) {
                     try {
                         connection.close();
                     } catch (SQLException ex) {
-
+                        LOGGER.info("Connection after destroy wasn't close", ex);
                     }
                 }
             }
@@ -70,6 +86,12 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Need to get connection from deque of connections, if queue is empy wait
+     * for put back connection by while{}
+     *
+     * @return connectiom from queue
+     */
     public Connection getConnection() {
         Connection cn = null;
         lock.lock();
@@ -88,6 +110,11 @@ public class ConnectionPool {
         return cn;
     }
 
+    /**
+     * Need to put connection back to deque
+     *
+     * @param connection this is what we putting back
+     */
     public void putConnectionBack(Connection connection) {
         lock.lock();
         try {
@@ -98,45 +125,27 @@ public class ConnectionPool {
 
     }
 
+    /**
+     * Need to put properties and add certain number of connections do deque
+     */
     public static void init() {
 
-        final String DATABASE_PROPERTY = "database";
-        final String DATABASE_URL = "db.url";
-        final String DATABASE_USER = "db.user";
-        final String DATABASE_PASSWORD = "db.password";
-        final String DATABASE_CHARACTER_ENCODING = "db.characterEncoding";
-        final String DATABASE_USE_UNICODE = "db.useUnicode";
-        final String DATABASE_POOL_SIZE = "db.poolSize";
-
-        ResourceBundle resourceBundle;
-        try {
-            resourceBundle = ResourceBundle.getBundle(DATABASE_PROPERTY);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        final String URL = resourceBundle.getString(DATABASE_URL);
-        final String USER = resourceBundle.getString(DATABASE_USER);
-        final String PASSWORD = resourceBundle.getString(DATABASE_PASSWORD);
-        final String CHARACTER_ENCODING = resourceBundle.getString(DATABASE_CHARACTER_ENCODING);
-        final String USE_UNICODE = resourceBundle.getString(DATABASE_USE_UNICODE);
-        final String POOL_SIZE = resourceBundle.getString(DATABASE_POOL_SIZE);
-
         Properties properties = new Properties();
-        properties.put("user", USER);
-        properties.put("password", PASSWORD);
-        properties.put("characterEncoding", CHARACTER_ENCODING);
-        properties.put("useUnicode", USE_UNICODE);
+        properties.put("user", PoolData.USER);
+        properties.put("password", PoolData.PASSWORD);
+        properties.put("characterEncoding", PoolData.CHARACTER_ENCODING);
+        properties.put("useUnicode", PoolData.USE_UNICODE);
 
-        poolSize = Integer.parseInt(POOL_SIZE);
+        poolSize = Integer.parseInt(PoolData.POOL_SIZE);
         connectionQueue = new ArrayDeque<>(poolSize);
 
         for (int index = 0; index < poolSize; index++) {
             Connection connection;
             try {
-                connection = DriverManager.getConnection(URL, properties);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+                connection = DriverManager.getConnection(PoolData.URL, properties);
+            } catch (SQLException ex) {
+                LOGGER.error("Runtime in con pool in init", ex);
+                throw new RuntimeException();
             }
             connectionQueue.add(connection);
         }

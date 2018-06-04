@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
-public class SetUserNameValidator extends AbstractValidator {
+public class SetUserNameValidator implements CommonValidator {
 
     public boolean isValid(HttpServletRequest request) {
         String newName = request.getParameter(Parameters.NEW_LOGIN);

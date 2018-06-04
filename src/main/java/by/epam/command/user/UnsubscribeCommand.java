@@ -2,14 +2,10 @@ package by.epam.command.user;
 
 import by.epam.command.AbstractCommand;
 import by.epam.constant.Attributes;
-import by.epam.constant.Constants;
 import by.epam.constant.Pages;
 import by.epam.constant.Parameters;
-import by.epam.entity.Publication;
 import by.epam.entity.User;
 import by.epam.exception.ServiceException;
-import by.epam.service.payment.impl.PaymentServiceImpl;
-import by.epam.service.publication.impl.PublicationServiceImpl;
 import by.epam.service.user.impl.UserServiceImpl;
 import by.epam.view.View;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +31,7 @@ public class UnsubscribeCommand extends AbstractCommand {
             view.setPagePath(Pages.USER_PATH);
 
         } catch (ServiceException ex) {
-            session.setAttribute(Attributes.USER_UNSUBSCRIBE_SUCCESS, ex.getMessage());
+            session.setAttribute(Attributes.USER_UNSUBSCRIBE_ERROR, ex.getMessage());
             view.setPagePath(Pages.USER_PATH);
         }
 

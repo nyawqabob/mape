@@ -11,15 +11,20 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @MultipartConfig
 public class ControllerServlet extends HttpServlet {
+    
+    private static final Logger LOGGER = LogManager.getLogger(ControllerServlet.class);
 
     /**
-     * Destroy con pool here
+     * Destroy con pool here 
      */
     @Override
     public void destroy() {
+        LOGGER.info("Pool destroyed");
         ConnectionPool.getInstance().destroyConnections();
     }
 
@@ -35,7 +40,7 @@ public class ControllerServlet extends HttpServlet {
         CommandFactory factory = new CommandFactory();
         AbstractCommand command = factory.getCommand(req);
         if (command == null) {
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found :(");
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
         processRequest(command, req, resp);

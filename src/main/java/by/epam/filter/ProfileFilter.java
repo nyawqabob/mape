@@ -31,6 +31,15 @@ public class ProfileFilter implements Filter {
         doFilter(request, response, chain);
     }
 
+    /**
+     * Need to check user role when user write profile path as url
+     *
+     * @param request need to take session
+     * @param response need to redirect
+     * @param chain need to call doFilter by chain pattern
+     * @throws IOException
+     * @throws ServletException
+     */
     public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpSession session = request.getSession();
         LOGGER.info("Profile filter started");
@@ -50,7 +59,7 @@ public class ProfileFilter implements Filter {
             response.sendRedirect(Pages.ADMIN_PATH);
             return;
         }
-             String isLogin = (String) session.getAttribute(Attributes.IS_LOGIN);
+        String isLogin = (String) session.getAttribute(Attributes.IS_LOGIN);
         if (isLogin == null) {
             LOGGER.info("Profile filter redirect to login cuz isLogin is null");
             response.sendRedirect(Pages.LOGIN_PATH);

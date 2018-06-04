@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
-public class SetUserBalanceValidator extends AbstractValidator {
+public class SetUserBalanceValidator implements CommonValidator {
 
     public boolean isValid(HttpServletRequest request) {
         Integer newPrice = Integer.parseInt(request.getParameter(Parameters.NEW_BALANCE));

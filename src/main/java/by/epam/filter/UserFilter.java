@@ -32,6 +32,15 @@ public class UserFilter implements Filter {
         doFilter(request, response, chain);
     }
 
+    /**
+     * Need to check user page when user write user path as url
+     *
+     * @param request need to take session
+     * @param response need to redirect
+     * @param chain need to call doFilter by chain pattern
+     * @throws IOException
+     * @throws ServletException
+     */
     public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpSession session = request.getSession();
         LOGGER.info("User filter started");
